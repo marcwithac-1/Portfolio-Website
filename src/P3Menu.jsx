@@ -1,19 +1,19 @@
 import { useState, useEffect } from "react";
 
 const ITEMS = [
-  { id: "about",   label: "ABOUT ME",      page: "about",   fontSize: 120, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10,  },
-  { id: "resume",  label: "RESUME",        page: "resume",  fontSize: 106, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
-  { id: "github",  label: "GITHUB LINK",   page: "github",  fontSize: 108, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
-  { id: "socials", label: "SOCIALS",       page: "socials", fontSize: 114, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
-  { id: "sideproj",label: "SIDE PROJECTS", page: "sideproj",fontSize: 96, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
+  { id: "about",   label: "ABOUT ME",      page: "about",   fontSize: 100, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10,  },
+  { id: "resume",  label: "RESUME",        page: "resume",  fontSize: 86, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
+  { id: "github",  label: "GITHUB LINK",   page: "github",  fontSize: 88, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
+  { id: "socials", label: "SOCIALS",       page: "socials", fontSize: 94, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
+  { id: "sideproj",label: "SIDE PROJECTS", page: "sideproj",fontSize: 76, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
 ];
 
 const CLIP_SHAPES = [
-  (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
-  (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
-  (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
-  (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
-  (w, h) => `polygon(0px 0px, ${w}px ${h * 0.5}px, 0px ${h}px)`,
+  (w, h) => `polygon(0% 0%, 100% 0%, 95% 25%, 100% 50%, 94% 75%, 100% 100%, 0% 100%)`,
+  (w, h) => `polygon(0% 0%, 100% 0%, 96% 30%, 100% 55%, 95% 80%, 100% 100%, 0% 100%)`,
+  (w, h) => `polygon(0% 0%, 100% 0%, 95% 20%, 100% 45%, 96% 70%, 100% 100%, 0% 100%)`,
+  (w, h) => `polygon(0% 0%, 100% 0%, 94% 35%, 100% 60%, 95% 85%, 100% 100%, 0% 100%)`,
+  (w, h) => `polygon(0% 0%, 100% 0%, 96% 25%, 100% 50%, 94% 75%, 100% 100%, 0% 100%)`,
 ];
 
 export default function P3Menu({ onNavigate }) {
@@ -52,13 +52,14 @@ export default function P3Menu({ onNavigate }) {
           align-items: center;
           justify-content: center;
           pointer-events: none;
+          /* Removed background: #111 and overflow: hidden so your background shows through */
         }
         
         @font-face {
-        font-family: 'p5hatty';
-        src: url('./assets/p5hatty/p5hatty-1.ttf') format('truetype'); /* Update path/format if using .otf or .woff2 */
-        font-weight: normal;
-        font-style: normal;
+          font-family: 'p5hatty';
+          src: url('./assets/p5hatty/p5hatty-1.ttf') format('truetype');
+          font-weight: normal;
+          font-style: normal;
         }
 
         .p3-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; pointer-events:none; }
@@ -70,10 +71,11 @@ export default function P3Menu({ onNavigate }) {
           padding: 48px;
           display: flex;
           flex-direction: column;
-          align-items: flex-start; /* Aligns all text rows to the left */
-          margin-left: 350px;      /* Adds spacing from the left edge of the screen */
+          align-items: flex-start;
+          margin-left: auto;
+          margin-right: 100px;
           pointer-events: all;
-          transform: rotate(0deg); /* Rotates all texts together (adjust degrees as needed) */
+          transform: rotate(-3deg);
           transform-origin: center center;
         }
 
@@ -152,15 +154,14 @@ export default function P3Menu({ onNavigate }) {
         }
 
         .p3-label-base {
-          font-family: 'p5menu';
+          font-family: 'rag', 'Anton', sans-serif;
           font-style: italic;
           letter-spacing: 2px;
           line-height: 0.85;
           display: block;
           white-space: nowrap;
           user-select: none;
-          /* Removed text-shadow and added black outline: */
-          -webkit-text-stroke: 30px #000000;
+          -webkit-text-stroke: 24px #000000;
           paint-order: stroke fill;
         }
 
@@ -205,35 +206,38 @@ export default function P3Menu({ onNavigate }) {
 
         .p3-name-tag {
           position: absolute;
-          top: 18px;
-          left: 22px;
-          z-index: 20;
+          top: 15%;
+          left: -2%;
+          z-index: 5;
           font-family: 'Anton', sans-serif;
           font-style: italic;
-          font-size: 108px;
-          line-height: 0.88;
-          letter-spacing: 2px;
-          color: rgba(10, 10, 14, 0.64);
-          transform: rotate(18deg);
-          transform-origin: left top;
+          font-size: 160px;
+          line-height: 0.8;
+          color: #000000;
+          background: #ffffff;
+          padding: 30px 90px 30px 40px;
+          transform: rotate(-10deg);
+          clip-path: polygon(0 0, 100% 12%, 88% 100%, 0 88%);
           user-select: none;
           pointer-events: none;
           display: flex;
           flex-direction: column;
           align-items: flex-start;
+          box-shadow: 15px 15px 0px rgba(0,0,0,0.8);
         }
         .p3-name-tag span:first-child {
-          color: rgba(0, 0, 0, 0.86);
+          color: #000000;
+          -webkit-text-stroke: 2px #fff;
         }
       `}</style>
 
       <div className="p3-overlay">
-        <div className="p3-name-tag">
+        {/*<div className="p3-name-tag">
           <span></span>
           <span></span>
-        </div>
+        </div> 
         <div className="p3-stripe" />
-        <div className="p3-stripe2" />
+        <div className="p3-stripe2" /> */}
 
         <nav className="p3-menu">
           {ITEMS.map((item, i) => {
