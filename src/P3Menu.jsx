@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 const ITEMS = [
-  { id: "about",   label: "ABOUT ME",      page: "about",   fontSize: 80, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10  },
-  { id: "resume",  label: "RESUME",        page: "resume",  fontSize: 66, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
-  { id: "github",  label: "GITHUB LINK",   page: "github",  fontSize: 68, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
-  { id: "socials", label: "SOCIALS",       page: "socials", fontSize: 74, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
-  { id: "sideproj",label: "SIDE PROJECTS", page: "sideproj",fontSize: 56, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
+  { id: "about",   label: "ABOUT ME",      page: "about",   fontSize: 120, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10,  },
+  { id: "resume",  label: "RESUME",        page: "resume",  fontSize: 106, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
+  { id: "github",  label: "GITHUB LINK",   page: "github",  fontSize: 108, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
+  { id: "socials", label: "SOCIALS",       page: "socials", fontSize: 114, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
+  { id: "sideproj",label: "SIDE PROJECTS", page: "sideproj",fontSize: 96, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
 ];
 
 const CLIP_SHAPES = [
@@ -53,6 +53,13 @@ export default function P3Menu({ onNavigate }) {
           justify-content: center;
           pointer-events: none;
         }
+        
+        @font-face {
+        font-family: 'p5hatty';
+        src: url('./assets/p5hatty/p5hatty-1.ttf') format('truetype'); /* Update path/format if using .otf or .woff2 */
+        font-weight: normal;
+        font-style: normal;
+        }
 
         .p3-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; pointer-events:none; }
         .p3-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(245,122,139,0.22); z-index:10; pointer-events:none; }
@@ -63,8 +70,11 @@ export default function P3Menu({ onNavigate }) {
           padding: 48px;
           display: flex;
           flex-direction: column;
-          align-items: center;
+          align-items: flex-start; /* Aligns all text rows to the left */
+          margin-left: 350px;      /* Adds spacing from the left edge of the screen */
           pointer-events: all;
+          transform: rotate(0deg); /* Rotates all texts together (adjust degrees as needed) */
+          transform-origin: center center;
         }
 
         .p3-row {
@@ -142,17 +152,20 @@ export default function P3Menu({ onNavigate }) {
         }
 
         .p3-label-base {
-          font-family: 'Anton', sans-serif;
+          font-family: 'p5menu';
           font-style: italic;
           letter-spacing: 2px;
           line-height: 0.85;
           display: block;
           white-space: nowrap;
           user-select: none;
+          /* Removed text-shadow and added black outline: */
+          -webkit-text-stroke: 30px #000000;
+          paint-order: stroke fill;
         }
 
         .p3-label-dark {
-          color: #3ce2ff;
+          color: #ffffff;
           transition: color 0.12s ease;
         }
         .p3-row.active .p3-label-dark { color: #6b0010; }
@@ -216,8 +229,8 @@ export default function P3Menu({ onNavigate }) {
 
       <div className="p3-overlay">
         <div className="p3-name-tag">
-          <span>jade's</span>
-          <span>persona</span>
+          <span></span>
+          <span></span>
         </div>
         <div className="p3-stripe" />
         <div className="p3-stripe2" />
@@ -226,7 +239,7 @@ export default function P3Menu({ onNavigate }) {
           {ITEMS.map((item, i) => {
             const isActive = active === i;
             const dist = Math.abs(i - active);
-            const opacity = isActive ? 1 : Math.max(0.5, 1 - dist * 0.2);
+            const opacity = isActive ? 1 : Math.max(0.95, 1 - dist * 0.2);
             const estW = item.label.length * item.fontSize * 0.6 + 80;
             const estH = item.fontSize * 0.94;
             const clipFn = CLIP_SHAPES[i] ?? CLIP_SHAPES[0];

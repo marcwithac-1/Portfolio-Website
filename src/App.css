@@ -4,6 +4,20 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'p5hatty';
+  src: url('./assets/p5hatty/p5hatty-1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'p5menu';
+  src: url('./assets/p5menu.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   background: #000;
   overflow: hidden;
@@ -14,6 +28,7 @@ body {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: #000; /* Fallback color instead of red */
 }
 
 #menu-screen video {
