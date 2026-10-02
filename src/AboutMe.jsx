@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import char1 from "./assets/char1.png";
-import char2 from "./assets/char2.png";
-import char3 from "./assets/char3.png";
-import bgVideo from "./assets/city red 2.mp4";
+import char1 from "./assets/ch icon no line.png";
+import char2 from "./assets/ch icon no line.png";
+import char3 from "./assets/ch icon no line2.png";
+import bgVideo from "./assets/bg no char right.mp4";
 import icon1 from "./assets/icon1.png";
 import icon2 from "./assets/icon2.png";
 import icon3 from "./assets/icon3.png";
@@ -16,31 +16,33 @@ const MAIN_IMAGES = [mainm, mainm2, mainf];
 
 const REVEAL_CONTENT = [
   {
-    upper: ["name moneybagg", "age:23"],
-    lower: "major: computer science",
+    upper: ["Computer Science graduate passionate about technology, creativity, and innovation.", 
+      "With experience in software development, data engineering, AI, and digital design,", 
+      "I enjoy turning ideas into practical solutions. I thrive at the intersection of technology", 
+      "and creativity, constantly exploring new ways to build, design, and innovate."],
+    lower: "About Me",
   },
   {
     upper: [
-      "Cleopatra lived closer to the Moon landing than to the building of the pyramids.",
-      "Vikings kept cats on ships for pest control (and vibes).",
-      "In medieval Europe, animals could be put on trial for crimes",
-    ],
-    lower: "abbove is some history fun fact",
+      "I work across data analytics, data engineering, AI, and automation, using technology to solve", 
+      "problems and streamline processes. I enjoy exploring innovative tools, uncovering insights from", 
+      "data, and developing practical digital solutions."],
+    lower: "What I Do",
   },
   {
     upper: [
-      "Oxford University founding is older than the Aztec Empire.",
-      "The shortest war in history lasted 38–45 minutes (Britain vs Zanzibar).",
-      "Humans have been writing for ~5,000 years",
+      "Beyond coding, I'm passionate about design, multimedia, and visual storytelling.",
+      "I enjoy experimenting with different creative mediums, exploring new styles, and",
+      "expressing ideas through art and design.",
     ],
-    lower: "yes it's a place holder",
+    lower: "Beyond Technology",
   },
 ];
 
 const ROLES = [
-  { text: "LEADER", color: "#e8c100", bg: "rgba(232,193,0,0.12)", border: "rgba(232,193,0,0.5)" },
-  { text: "PARTY",  color: "#4a8fff", bg: "rgba(74,143,255,0.12)", border: "rgba(74,143,255,0.5)" },
-  { text: "PARTY",  color: "#4a8fff", bg: "rgba(74,143,255,0.12)", border: "rgba(74,143,255,0.5)" },
+  { text: "ABOUT", color: "#e8c100", bg: "rgba(232,193,0,0.12)", border: "rgba(232,193,0,0.5)" },
+  { text: "WORK",  color: "#4a8fff", bg: "rgba(74,143,255,0.12)", border: "rgba(74,143,255,0.5)" },
+  { text: "PASSION",  color: "#4a8fff", bg: "rgba(74,143,255,0.12)", border: "rgba(74,143,255,0.5)" },
 ];
 
 const ITEMS = [
@@ -53,7 +55,7 @@ const ITEMS = [
     ],
   },
   {
-    id: "instagram", label: "FUN FACT ABOUT ME", handle: "@yourhandle", href: "https://instagram.com/yourhandle", icon: "📷", barIcon: icon2, bars: 5, newBars: [1, 2], counts: ["3.4M", "2.5M", "676K", "412K", "198K"],
+    id: "instagram", label: "WHAT I DO", handle: "@yourhandle", href: "https://instagram.com/yourhandle", icon: "📷", barIcon: icon2, bars: 5, newBars: [1, 2], counts: ["3.4M", "2.5M", "676K", "412K", "198K"],
     links: ["instagram.com/p/C4xQmRrNk2a", "instagram.com/p/C3wLpBsOj7f", "instagram.com/reel/C2vKoArMi6e", "instagram.com/p/C1uJnZqLh5d", "instagram.com/reel/C0tImYpKg4c"],
     stats: [
       { tag: "FOL", value: "3.4K", color: "#e1306c" },
@@ -61,7 +63,7 @@ const ITEMS = [
     ],
   },
   {
-    id: "tiktok", label: "WIRED FACT ABOUT ME", handle: "@yourhandle", href: "https://tiktok.com/@yourhandle", icon: "🎵", barIcon: icon3, bars: 7, newBars: [0, 3, 5, 6], counts: ["5.1M", "3.7M", "2.2M", "1.4M", "831K", "490K", "217K"],
+    id: "tiktok", label: "BEYOND TECHNOLOGY", handle: "@yourhandle", href: "https://tiktok.com/@yourhandle", icon: "🎵", barIcon: icon3, bars: 7, newBars: [0, 3, 5, 6], counts: ["5.1M", "3.7M", "2.2M", "1.4M", "831K", "490K", "217K"],
     links: ["tiktok.com/@yourhandle/video/7318492016374859054", "tiktok.com/@yourhandle/video/7305837261940183342", "tiktok.com/@yourhandle/video/7291046385720348974", "tiktok.com/@yourhandle/video/7278392047163820334", "tiktok.com/@yourhandle/video/7264819203847165742", "tiktok.com/@yourhandle/video/7251047382916430126", "tiktok.com/@yourhandle/video/7237294018463851822"],
     stats: [
       { tag: "FOL", value: "8.9K", color: "#00f2ea" },
@@ -301,7 +303,6 @@ export default function AboutMe() {
           font-weight: 300;
           font-size: 22px;
           letter-spacing: 0.4px;
-          text-transform: lowercase;
           padding-left: 22px;
         }
 

@@ -121,7 +121,7 @@ export default function P3Menu({ onNavigate }) {
           0%   { transform: translateY(-40%) translateX(-12px) scaleX(0) scaleY(1); }
           55%  { transform: translateY(-46%) translateX(-15px) scaleX(1.22) scaleY(1.18); }
           75%  { transform: translateY(-39%) translateX(-11px) scaleX(0.96) scaleY(0.97); }
-          100% { transform: translateY(-40%) translateX(-12px) scaleX(1) scaleY(1); }
+          100% { transform: translateY(-40%) translateX(-12px) scaleX(1.19) scaleY(1); }
         }
 
         .p3-shadow-tri {
