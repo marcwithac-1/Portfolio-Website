@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 const ITEMS = [
-  { id: "about",   label: "ABOUT ME",      page: "about",   fontSize: 100, offsetX: 0,  offsetY: 0,  skew: -6,  skewY: 10,  },
-  { id: "resume",  label: "RESUME",        page: "resume",  fontSize: 86, offsetX: 20, offsetY: 8,  skew: -11, skewY: -10 },
-  { id: "github",  label: "GITHUB LINK",   page: "github",  fontSize: 88, offsetX: 8, offsetY: 6,  skew: 0, skewY: -4  },
-  { id: "socials", label: "SOCIALS",       page: "socials", fontSize: 94, offsetX: 16, offsetY: 8,  skew: -3,  skewY: 5   },
-  { id: "sideproj",label: "SIDE PROJECTS", page: "sideproj",fontSize: 76, offsetX: 10, offsetY: 6,  skew: -4,  skewY: 7   },
+  { id: "about",    label: "ABOUT ME",         page: "about",    fontSize: 72, offsetX: -40,  y: -235,   skew: 0,  skewY: -14, },
+  { id: "resume",   label: "RESUME",           page: "resume",   fontSize: 75, offsetX: 55,  y: -120,  skew: 0,  skewY: -7   },
+  { id: "github",   label: "PROJECTS",  page: "github",   fontSize: 80, offsetX: -68,  y: -15,  skew: 0,  skewY: 0,   },
+  { id: "sideproj", label: "GRAPHIC DESIGN", page: "sideproj", fontSize: 48, offsetX: -80, y: 120,  skew: 0,  skewY: 11,   },
+  { id: "socials",  label: "SOCIALS",          page: "socials",  fontSize: 72, offsetX: 64, y: 235, skew: 0,  skewY: 19,   },
 ];
 
 const CLIP_SHAPES = [
@@ -52,7 +52,7 @@ export default function P3Menu({ onNavigate }) {
           align-items: center;
           justify-content: center;
           pointer-events: none;
-          /* Removed background: #111 and overflow: hidden so your background shows through */
+          overflow: hidden; /* Prevents unwanted scrollbars on small screens */
         }
         
         @font-face {
@@ -62,21 +62,23 @@ export default function P3Menu({ onNavigate }) {
           font-style: normal;
         }
 
-        .p3-stripe  { position:absolute; right:0; top:0; bottom:0; width:5px; background:#c4001a; z-index:10; pointer-events:none; }
-        .p3-stripe2 { position:absolute; right:9px; top:0; bottom:0; width:2px; background:rgba(245,122,139,0.22); z-index:10; pointer-events:none; }
-
+        /* 
+          🔒 RESPONSIVE MENU ANCHOR:
+          Instead of margin-left: 1500px (which breaks on smaller screens), 
+          we use absolute positioning anchored to the right side of the screen.
+        */
         .p3-menu {
-          position: relative;
+          position: absolute;
+          right: 5vw;            /* Stays a fixed percentage away from the right edge */
+          top: 50%;              /* Centers vertically */
+          transform: translateY(-50%) rotate(-3deg);
+          transform-origin: right center;
           z-index: 20;
-          padding: 48px;
+          padding: 20px;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-          margin-left: auto;
-          margin-right: 100px;
+          align-items: flex-end; /* Aligns text neatly to the right */
           pointer-events: all;
-          transform: rotate(-3deg);
-          transform-origin: center center;
         }
 
         .p3-row {
@@ -84,16 +86,14 @@ export default function P3Menu({ onNavigate }) {
           cursor: pointer;
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-end;
           line-height: 1;
           text-decoration: none;
           opacity: 0;
-          transform: translateX(36px);
           transition: opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1);
         }
         .p3-row.mounted {
           opacity: 1 !important;
-          transform: translateX(0) !important;
         }
 
         .p3-glow {
@@ -169,7 +169,7 @@ export default function P3Menu({ onNavigate }) {
           color: #ffffff;
           transition: color 0.12s ease;
         }
-        .p3-row.active .p3-label-dark { color: #6b0010; }
+        .p3-row.active .p3-label-dark { color: #ff2a2a; }
         .p3-row:hover:not(.active) .p3-label-dark { color: #00d9ff; }
 
         .p3-label-bright {
@@ -203,42 +203,9 @@ export default function P3Menu({ onNavigate }) {
           border-radius: 3px;
           padding: 1px 6px; font-size: 11px;
         }
-
-        .p3-name-tag {
-          position: absolute;
-          top: 15%;
-          left: -2%;
-          z-index: 5;
-          font-family: 'Anton', sans-serif;
-          font-style: italic;
-          font-size: 160px;
-          line-height: 0.8;
-          color: #000000;
-          background: #ffffff;
-          padding: 30px 90px 30px 40px;
-          transform: rotate(-10deg);
-          clip-path: polygon(0 0, 100% 12%, 88% 100%, 0 88%);
-          user-select: none;
-          pointer-events: none;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          box-shadow: 15px 15px 0px rgba(0,0,0,0.8);
-        }
-        .p3-name-tag span:first-child {
-          color: #000000;
-          -webkit-text-stroke: 2px #fff;
-        }
       `}</style>
 
       <div className="p3-overlay">
-        {/*<div className="p3-name-tag">
-          <span></span>
-          <span></span>
-        </div> 
-        <div className="p3-stripe" />
-        <div className="p3-stripe2" /> */}
-
         <nav className="p3-menu">
           {ITEMS.map((item, i) => {
             const isActive = active === i;
@@ -255,7 +222,7 @@ export default function P3Menu({ onNavigate }) {
                 className={`p3-row ${isActive ? "active" : ""} ${mounted ? "mounted" : ""}`}
                 style={{
                   marginRight: item.offsetX,
-                  marginTop: item.offsetY,
+                  transform: `translateY(${item.y ?? 0}px)`,
                   transitionDelay: mounted ? `${i * 80}ms` : "0ms",
                 }}
                 onClick={(e) => { e.preventDefault(); onNavigate?.(item.page); }}
