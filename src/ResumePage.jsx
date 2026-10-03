@@ -17,7 +17,7 @@ const EDUCATION_ROWS = [
 
 export default function ResumePage({ src }) {
   const navigate = useNavigate();
-  const [active, setActive] = useState(1);
+  const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -38,31 +38,98 @@ export default function ResumePage({ src }) {
   }, [navigate]);
 
   return (
-    <div id="menu-screen">
-      <video src={src} autoPlay loop muted playsInline />
-      <div className="resume-entry-mask" aria-hidden="true">
-        <video className="resume-entry-video" src={src} autoPlay loop muted playsInline />
+    <div id="menu-screen" className="p5-bg-container">
+      {/* Persona 5 Animated Background with Moving Red Vertical Lines */}
+      <div className="p5-background" aria-hidden="true">
+        <div className="p5-red-stripes"></div>
+        <div className="p5-halftone"></div>
+        <div className="p5-vignette"></div>
       </div>
+
+      <div className="resume-entry-mask" aria-hidden="true">
+        <div className="resume-entry-fill" />
+      </div>
+
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
+
+        /* Persona 5 Theme Background */
+        .p5-bg-container {
+          position: relative;
+          width: 100vw;
+          height: 100vh;
+          overflow: hidden;
+          background-color: #0b0b0b;
+        }
+
+        .p5-background {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(135deg, #800e13 0%, #1a0203 50%, #000000 100%);
+          overflow: hidden;
+        }
+
+        /* Moving Red Slanted Vertical Lines */
+        .p5-red-stripes {
+          position: absolute;
+          inset: -50%;
+          width: 200%;
+          height: 200%;
+          background: repeating-linear-gradient(
+            -75deg,
+            transparent,
+            transparent 35px,
+            rgba(217, 4, 41, 0.35) 35px,
+            rgba(217, 4, 41, 0.35) 70px,
+            rgba(0, 0, 0, 0.6) 70px,
+            rgba(0, 0, 0, 0.6) 85px,
+            rgba(239, 35, 60, 0.5) 85px,
+            rgba(239, 35, 60, 0.5) 120px
+          );
+          transform: rotate(15deg);
+          animation: p5StripeMove 18s linear infinite;
+        }
+
+        @keyframes p5StripeMove {
+          0% {
+            background-position: 0 0;
+          }
+          100% {
+            background-position: 500px 500px;
+          }
+        }
+
+        /* Subtle Halftone Pattern Overlay for P5 comic texture */
+        .p5-halftone {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+          background-size: 16px 16px;
+          pointer-events: none;
+        }
+
+        .p5-vignette {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.85) 100%);
+          pointer-events: none;
+        }
 
         .resume-entry-mask {
           position: absolute;
           inset: 0;
           z-index: 9;
           overflow: hidden;
-          background: #0047FF;
           clip-path: circle(0 at 50% 50%);
           animation: resume-entry-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
           pointer-events: none;
         }
 
-        .resume-entry-video {
+        .resume-entry-fill {
           position: absolute;
           inset: 0;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+          background: #d90429;
         }
 
         @keyframes resume-entry-reveal {
@@ -97,7 +164,7 @@ export default function ResumePage({ src }) {
           color: #f6fbff;
           letter-spacing: 2px;
           margin: 0 0 6px 12px;
-          text-shadow: 0 2px 0 rgba(0,0,0,0.18);
+          text-shadow: 0 2px 0 rgba(0,0,0,0.5);
           opacity: 0;
           transform: translateX(-24px);
           transition: opacity 0.35s ease, transform 0.35s ease;
@@ -123,15 +190,16 @@ export default function ResumePage({ src }) {
         .resume-card {
           position: relative;
           height: 112px;
-          background: #10185f;
+          background: #111111;
+          border-left: 6px solid #d90429;
           clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
-          box-shadow: 0 8px 0 rgba(5, 13, 59, 0.85);
+          box-shadow: 0 8px 0 rgba(0, 0, 0, 0.85);
           transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease;
           overflow: visible;
         }
         .resume-card-wrap.active .resume-card {
           background: #ffffff;
-          box-shadow: 10px 8px 0 #d63232;
+          box-shadow: 10px 8px 0 #d90429;
           transform: translateX(6px);
         }
 
@@ -150,26 +218,26 @@ export default function ResumePage({ src }) {
           left: -10px;
           width: 56px;
           height: 70px;
-          background: #0b113d;
-          border: 3px solid #9cf7ff;
+          background: #d90429;
+          border: 3px solid #ffffff;
           clip-path: polygon(14% 0, 100% 0, 84% 100%, 0 100%);
           display: flex;
           align-items: center;
           justify-content: center;
           transform: rotate(-8deg);
-          box-shadow: 0 4px 0 rgba(0,0,0,0.28);
+          box-shadow: 0 4px 0 rgba(0,0,0,0.4);
           transition: background 0.22s ease, border-color 0.22s ease;
         }
         .resume-badge-text {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 36px;
-          color: #d2fdff;
+          color: #ffffff;
           letter-spacing: 1px;
           transform: rotate(8deg);
         }
         .resume-card-wrap.active .resume-badge {
-          background: #000;
-          border-color: #000;
+          background: #000000;
+          border-color: #000000;
         }
         .resume-card-wrap.active .resume-badge-text {
           color: #fff;
@@ -180,7 +248,7 @@ export default function ResumePage({ src }) {
           font-size: 56px;
           line-height: 0.9;
           letter-spacing: 1px;
-          color: #a5f6ff;
+          color: #ffffff;
           transition: color 0.22s ease;
         }
         .resume-card-wrap.active .resume-title {
@@ -198,14 +266,14 @@ export default function ResumePage({ src }) {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 28px;
           letter-spacing: 2px;
-          color: #9ffbff;
+          color: #ff4d6d;
           transition: color 0.22s ease;
         }
         .resume-rank-number {
           font-family: 'Anton', sans-serif;
           font-size: 70px;
           line-height: 0.82;
-          color: #9ffbff;
+          color: #ff4d6d;
           transition: color 0.22s ease;
         }
         .resume-card-wrap.active .resume-rank-label,
@@ -219,7 +287,7 @@ export default function ResumePage({ src }) {
           right: 14px;
           bottom: 12px;
           height: 34px;
-          background: #85f4ff;
+          background: #d90429;
           clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
           display: flex;
           align-items: center;
@@ -235,7 +303,7 @@ export default function ResumePage({ src }) {
           font-size: 28px;
           line-height: 1;
           letter-spacing: 1px;
-          color: #041238;
+          color: #ffffff;
           transition: color 0.22s ease;
         }
         .resume-card-wrap.active .resume-subtitle {
@@ -250,11 +318,12 @@ export default function ResumePage({ src }) {
           min-height: 74vh;
           z-index: 12;
           padding: 22px 24px 24px 24px;
-          background: linear-gradient(180deg, rgba(15, 28, 105, 0.96) 0%, rgba(8, 16, 68, 0.97) 100%);
+          background: linear-gradient(180deg, rgba(20, 2, 4, 0.96) 0%, rgba(10, 1, 2, 0.97) 100%);
+          border-left: 6px solid #d90429;
           clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
           box-shadow:
-            inset 0 0 0 1px rgba(133, 244, 255, 0.16),
-            16px 16px 0 rgba(0, 6, 30, 0.55);
+            inset 0 0 0 1px rgba(217, 4, 41, 0.3),
+            16px 16px 0 rgba(0, 0, 0, 0.85);
           overflow: hidden;
         }
         .resume-detail-panel::before {
@@ -262,7 +331,7 @@ export default function ResumePage({ src }) {
           position: absolute;
           inset: 0;
           background:
-            linear-gradient(135deg, rgba(133, 244, 255, 0.08) 0 15%, transparent 15% 100%),
+            linear-gradient(135deg, rgba(217, 4, 41, 0.08) 0 15%, transparent 15% 100%),
             linear-gradient(180deg, rgba(255,255,255,0.05), transparent 24%);
           pointer-events: none;
         }
@@ -274,10 +343,10 @@ export default function ResumePage({ src }) {
           gap: 14px;
           min-height: 92px;
           padding: 0 18px;
-          background: linear-gradient(90deg, #8ef5ff 0%, #d3fdff 100%);
+          background: linear-gradient(90deg, #d90429 0%, #ef233c 100%);
           clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-          color: #08153f;
-          box-shadow: 10px 0 0 rgba(255, 94, 136, 0.88);
+          color: #ffffff;
+          box-shadow: 10px 0 0 rgba(0, 0, 0, 0.88);
         }
         .resume-detail-top-index {
           font-family: 'Anton', sans-serif;
@@ -310,20 +379,20 @@ export default function ResumePage({ src }) {
           gap: 14px;
           min-height: 56px;
           padding: 0 14px;
-          background: rgba(8, 18, 72, 0.96);
+          background: rgba(20, 2, 4, 0.96);
           clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
-          box-shadow: inset 0 0 0 1px rgba(140, 239, 255, 0.12);
+          box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
           transition: transform 0.16s ease, background 0.16s ease;
         }
         .resume-detail-row:hover {
           transform: translateX(4px);
-          background: rgba(12, 26, 94, 1);
+          background: rgba(40, 4, 8, 1);
         }
         .resume-detail-row-index {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 26px;
           letter-spacing: 1px;
-          color: #94f4ff;
+          color: #ff4d6d;
         }
         .resume-detail-row-title {
           font-family: 'Anton', sans-serif;
@@ -333,11 +402,11 @@ export default function ResumePage({ src }) {
         }
         .resume-detail-status {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
+-          font-size: 22px;
           line-height: 1;
           letter-spacing: 1.1px;
-          color: #06133b;
-          background: #8df6ff;
+          color: #ffffff;
+          background: #d90429;
           padding: 7px 12px;
           clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
         }
@@ -345,15 +414,15 @@ export default function ResumePage({ src }) {
           position: relative;
           margin-top: 22px;
           padding: 18px;
-          background: rgba(5, 13, 57, 0.97);
+          background: rgba(15, 2, 3, 0.97);
           clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-          box-shadow: inset 0 0 0 1px rgba(145, 239, 255, 0.12);
+          box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
         }
         .resume-detail-bottom-title {
           font-family: 'Bebas Neue', sans-serif;
           font-size: 30px;
           letter-spacing: 2px;
-          color: #91f5ff;
+          color: #ff4d6d;
           margin-bottom: 14px;
         }
         .resume-detail-bullets {
@@ -361,13 +430,13 @@ export default function ResumePage({ src }) {
           flex-direction: column;
           gap: 10px;
         }
+          
         .resume-detail-bullet {
           font-family: 'Anton', sans-serif;
           font-size: 21px;
           line-height: 1.15;
           color: #edfaff;
         }
-
       `}</style>
 
       <div className="resume-overlay">
@@ -425,14 +494,13 @@ export default function ResumePage({ src }) {
             <div className="resume-detail-bottom">
               <div className="resume-detail-bottom-title">DETAILS</div>
               <div className="resume-detail-bullets">
-                <div className="resume-detail-bullet">- Maintain progress across required classes and supporting work.</div>
-                <div className="resume-detail-bullet">- Track portfolio-ready projects tied to coursework and labs.</div>
-                <div className="resume-detail-bullet">- Keep materials prepared for internships, research, and review.</div>
+                <div className="resume-detail-bullet">Maintain progress across required classes and supporting work.</div>
+                <div className="resume-detail-bullet">Track portfolio-ready projects tied to coursework and labs.</div>
+                <div className="resume-detail-bullet">Keep materials prepared for internships, research, and review.</div>
               </div>
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
