@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import char1 from "./assets/ch icon no line.png";
-import char2 from "./assets/ch icon no line.png";
-import char3 from "./assets/ch icon no line2.png";
+import char2 from "./assets/ch icon no line2.png";
+import char3 from "./assets/ch icon3.png";
 import bgVideo from "./assets/bg no char right.mp4";
 import icon1 from "./assets/icon1.png";
 import icon2 from "./assets/icon2.png";
 import icon3 from "./assets/icon3.png";
-import mainm from "./assets/mainm.jpeg";
-import mainm2 from "./assets/mainm2.jpeg";
-import mainf from "./assets/mainf.jpeg";
+import mainm from "./assets/mainm1.png";
+import mainm2 from "./assets/mainm222.png";
+import mainf from "./assets/mainm33.png";
 
 const CHARS = [char1, char2, char3];
 const MAIN_IMAGES = [mainm, mainm2, mainf];
@@ -116,9 +116,9 @@ export default function AboutMe() {
       {revealed && (
         <div key={`nav-${active}`} className="sc-right-nav">
           <span className="sc-nav-arrow left">◄</span>
-          <span className="sc-nav-btn">LB</span>
+          <span className="sc-nav-btn">🠹</span>
           <span className="sc-nav-dot" />
-          <span className="sc-nav-btn">RB</span>
+          <span className="sc-nav-btn">🠻</span>
           <span className="sc-nav-arrow right">►</span>
         </div>
       )}
@@ -236,7 +236,7 @@ export default function AboutMe() {
           z-index: 12;
           pointer-events: none;
           background:
-            linear-gradient(180deg, rgba(255,255,255,0.98) 0%, rgba(243,246,252,0.98) 100%);
+            linear-gradient(180deg, #fff 0%, #fff 100%);
           clip-path: polygon(0 0, 100% 0, calc(100% - 88px) 100%, 0 100%);
           box-shadow:
             0 0 0 2px rgba(255,255,255,0.18),

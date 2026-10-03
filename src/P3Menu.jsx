@@ -5,7 +5,7 @@ const ITEMS = [
   { id: "resume",   label: "RESUME",           page: "resume",   fontSize: 75, offsetX: 55,  y: -120,  skew: 0,  skewY: -7   },
   { id: "github",   label: "PROJECTS",  page: "github",   fontSize: 80, offsetX: -68,  y: -15,  skew: 0,  skewY: 0,   },
   { id: "sideproj", label: "GRAPHIC DESIGN", page: "sideproj", fontSize: 48, offsetX: -80, y: 120,  skew: 0,  skewY: 11,   },
-  { id: "socials",  label: "SOCIALS",          page: "socials",  fontSize: 72, offsetX: 64, y: 235, skew: 0,  skewY: 19,   },
+  { id: "socials",  label: "CONTACTS",          page: "socials",  fontSize: 62, offsetX: 43, y: 235, skew: 0,  skewY: 19,   },
 ];
 
 const CLIP_SHAPES = [

@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 
-const defaultBlocks = ["#0d1a3a", "#1a6aff", "#7dd4fc"];
+const defaultBlocks = ["#700f17", "#e60026", "#fff"];
 
 function DefaultTransition() {
   return defaultBlocks.map((color, i) => (
@@ -28,8 +28,8 @@ function DefaultTransition() {
 
 function AboutTransition() {
   const panels = [
-    { color: "#00184c", top: "-12vh", left: "-18vw", width: "86vw", delay: 0 },
-    { color: "#53edff", top: "24vh", left: "-10vw", width: "72vw", delay: 0.05 },
+    { color: "#2b0005", top: "-12vh", left: "-18vw", width: "86vw", delay: 0 },
+    { color: "#c4001a", top: "24vh", left: "-10vw", width: "72vw", delay: 0.05 },
     { color: "#ffffff", top: "58vh", left: "-14vw", width: "82vw", delay: 0.1 },
   ];
 
@@ -63,8 +63,8 @@ function AboutTransition() {
 
 function SocialsTransition() {
   const stripes = [
-    { color: "#00184c", left: "72vw", width: "24vw", delay: 0 },
-    { color: "#00dff7", left: "80vw", width: "14vw", delay: 0.06 },
+    { color: "#2b0005", left: "72vw", width: "24vw", delay: 0 },
+    { color: "#c4001a", left: "80vw", width: "14vw", delay: 0.06 },
     { color: "#ffffff", left: "88vw", width: "8vw", delay: 0.12 },
   ];
 
@@ -103,10 +103,10 @@ function TransitionOverlay({ variant }) {
 
 function ResumeTransition() {
   const cards = [
-    { top: "14vh", color: "#0f1760", delay: 0 },
-    { top: "31vh", color: "#7ff6ff", delay: 0.05 },
+    { top: "14vh", color: "#2b0005", delay: 0 },
+    { top: "31vh", color: "#c4001a", delay: 0.05 },
     { top: "48vh", color: "#ffffff", delay: 0.1 },
-    { top: "65vh", color: "#0f1760", delay: 0.15 },
+    { top: "65vh", color: "#2b0005", delay: 0.15 },
   ];
 
   return cards.map((card, i) => (
