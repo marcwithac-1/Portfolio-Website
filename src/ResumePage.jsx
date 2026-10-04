@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import myVideoFile from "./assets/buildings red.mp4";
 
 const ITEMS = [
   { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Coursework", rank: 3 },
@@ -39,16 +40,16 @@ export default function ResumePage({ src }) {
 
   return (
     <div id="menu-screen" className="p5-bg-container">
-      {/* Persona 5 Animated Background with Moving Red Vertical Lines */}
-      <div className="p5-background" aria-hidden="true">
-        <div className="p5-red-stripes"></div>
-        <div className="p5-halftone"></div>
-        <div className="p5-vignette"></div>
-      </div>
-
-      <div className="resume-entry-mask" aria-hidden="true">
-        <div className="resume-entry-fill" />
-      </div>
+      {/* MP4 Video Background */}
+      <video 
+        className="p5-video-bg" 
+        src={myVideoFile} 
+        autoPlay 
+        loop 
+        muted 
+        playsInline 
+      />
+      <div className="p5-video-overlay" aria-hidden="true" />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
@@ -60,6 +61,23 @@ export default function ResumePage({ src }) {
           height: 100vh;
           overflow: hidden;
           background-color: #0b0b0b;
+        }
+
+        .p5-video-bg {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 1;
+        }
+
+        .p5-video-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.45); /* Adjust opacity to darken the video if needed */
+          z-index: 2;
+          pointer-events: none;
         }
 
         .p5-background {
