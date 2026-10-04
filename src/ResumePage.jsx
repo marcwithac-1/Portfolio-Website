@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import myVideoFile from "./assets/buildings red.mp4";
+import myVideoFile from "./assets/buildings red3.mp4";
 
 const ITEMS = [
   { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Coursework", rank: 3 },
