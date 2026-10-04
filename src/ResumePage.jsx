@@ -2,18 +2,53 @@ import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import myVideoFile from "./assets/buildings red3.mp4";
 
+import pmiCertImg from "./assets/PMI Project Management Ready_page-0001 small.jpg";
+import pythonCertImg from "./assets/Python_page-0001 small.jpg";
+import ccnaCertImg from "./assets/CCNA-_Introduction_to_Networks_certificate_mljsumague-gmail-com_62bee3a2-f4b4-41f4-815f-326ce8dee2c1_page-0001 small.jpg";
+import fccCertImg from "./assets/Responsive Web Design small 2.jpg";
+
 const ITEMS = [
-  { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Coursework", rank: 3 },
-  { id: "ii", badge: "II", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 4 },
-  { id: "iii", badge: "III", title: "PROJECTS", subtitle: "Featured Work", rank: 5 },
-  { id: "iv", badge: "IV", title: "EXPERIENCE", subtitle: "Internships / Roles", rank: 2 },
+  { id: "i", badge: "I", title: "EDUCATION", subtitle: "University / Coursework", rank: 1 },
+  { id: "ii", badge: "II", title: "EXPERIENCE", subtitle: "Internships / Roles", rank: 2 },
+  { id: "iii", badge: "III", title: "SKILLS", subtitle: "Frontend / Design / UI", rank: 3 },
+  { id: "iv", badge: "IV", title: "CERTIFICATIONS", subtitle: "Industry Credentials", rank: 4 },
+  { id: "v", badge: "V", title: "ACHIEVEMENTS", subtitle: "Competitions & Awards", rank: 5 },
 ];
 
-const EDUCATION_ROWS = [
-  { index: "01", title: "General Education", status: "Complete" },
-  { index: "02", title: "Computer Science Core", status: "In Progress" },
-  { index: "03", title: "Elective Track", status: "Queued" },
-  { index: "04", title: "Capstone Prep", status: "Pending" },
+const EDUCATION_DETAILS = {
+  university: "FEU Institute of Technology",
+  degree: "BS Computer Science with Specialization in Data Science",
+  leadership: [
+    {
+      title: "CS EXPO 2025 - Finance Committee (Sep. 2025 - Dec 2025)",
+      bullets: [
+        "Verified payments against registration records and resolved discrepancies",
+        "Maintained financial records and monitored event transactions"
+      ]
+    },
+    {
+      title: "ACM Student Chapter (FEU Tech) - Finance Junior Officer (Sept 2022 - Aug 2024)",
+      bullets: [
+        "Monitored and documented financial transactions for accurate budget tracking",
+        "Assisted in managing the organization's finances, including maintaining financial records"
+      ]
+    }
+  ]
+};
+
+const EXPERIENCE_ROWS = [
+  { 
+    index: "01", 
+    title: "IT Business Analyst Intern", 
+    subtitle: "PurpleBug, Inc. (Dec 2025 - Jul 2026)",
+    details: [
+      "Developed Power BI and Looker Studio dashboards for KPI reporting",
+      "Managed website migrations, content audits, and front-end optimization",
+      "Automated workflows and reports using Python, Excel, Apps Script, and Power Automate",
+      "Built AI-powered chatbots and LLM knowledge bases with conversational storyflows on Smicos",
+      "Processed OCR/text extraction data and performed data cleaning for AI-ready datasets"
+    ]
+  }
 ];
 
 const SKILLS_ROWS = [
@@ -21,21 +56,65 @@ const SKILLS_ROWS = [
   { index: "02", title: "Mobile App Development", details: "Flutter, Dart, Android Studio, Firebase, Mobile UI Development" },
   { index: "03", title: "Developer Tools & Platforms", details: "VS Code, Jupyter Notebook, Google Colab, Power BI, Looker Studio, Roboflow, Figma, Git/GitHub" },
   { index: "04", title: "Frameworks & Libraries", details: "YOLOv8, TensorFlow, Keras, PyTorch, Pandas, NumPy, Matplotlib, Scikit-learn, OpenCV, ByteTrack" },
-  { index: "05", title: "Data Analytics & BI", details: "Microsoft Power BI, Google Looker Studio, Dashboard Dev, Data Visualization, KPI Reporting" },
-  { index: "06", title: "AI & Automation", details: "Conversational AI, Chatbot Design, Storyflow Dev, Workflow Automation, Machine Learning, Computer Vision, Power Automate" },
+  { index: "05", title: "Data Analytics & BI", details: "Microsoft Power BI, Google Looker Studio, Data Visualization, KPI Reporting" },
+  { index: "06", title: "AI & Automation", details: "Conversational AI, Workflow Automation, Machine Learning, Computer Vision, Microsoft Power Automate" },
   { index: "07", title: "Web & Digital Solutions", details: "Website Migration, Front-End Optimization, Content Management, User Experience Enhancement" },
-  { index: "08", title: "Graphic Design & Multimedia", details: "Adobe Photoshop, Premiere Pro, After Effects, Canva, Video Editing, Illustrator, Mixed Media, Content Creation" },
+  { index: "08", title: "Graphic Design & Multimedia", details: "Adobe Photoshop, Premiere Pro, After Effects, Canva, Adobe Illustrator, Ibis Paint, Mixed Media, Content Creation" },
 ];
 
-const PROJECTS_ROWS = [
-  { index: "01", title: "AI Computer Vision System", status: "Deployed" },
-  { index: "02", title: "Mobile App Ecosystem", status: "Active" },
-  { index: "03", title: "BI & Analytics Dashboard", status: "Complete" },
+const CERTIFICATIONS_ROWS = [
+  { 
+    index: "01", 
+    title: "PMI Project Management Ready", 
+    status: "2025", 
+    image: pmiCertImg 
+  },
+  { 
+    index: "02", 
+    title: "IT Specialist Python Certification", 
+    status: "2024", 
+    image: pythonCertImg
+  },
+  { 
+    index: "03", 
+    title: "CCNA: Introduction to Networks", 
+    status: "2024", 
+    image: ccnaCertImg
+  },
+  { 
+    index: "04", 
+    title: "FreeCodeCamp: Responsive Web Design", 
+    status: "2021", 
+    image: fccCertImg
+  },
 ];
 
-const EXPERIENCE_ROWS = [
-  { index: "01", title: "Software & AI Developer", status: "Current" },
-  { index: "02", title: "UI/UX & Multimedia Intern", status: "Finished" },
+const ACHIEVEMENTS_ROWS = [
+  { 
+    index: "01", 
+    title: "Sustainable Food Asia 2026 – Malaysia", 
+    details: "Top 4 Finalist among 30 teams across Asia"
+  },
+  { 
+    index: "02", 
+    title: "EMC Global Summit 2026 – Japan", 
+    details: "Awarded Global Award and recognized among the Top 10 International Startup Finalists"
+  },
+  { 
+    index: "03", 
+    title: "CS Expo 2025 - FEU Institute of Technology", 
+    details: "Best Thesis for Agricultural Category and 3rd Overall Best Thesis"
+  },
+  { 
+    index: "04", 
+    title: "Startup QC Student Competition 2025", 
+    details: "2nd Runner-Up, placing among the top 4 teams out of 100+ participating teams"
+  },
+  { 
+    index: "05", 
+    title: "Philippine Startup Challenge 9 (2024)", 
+    details: "National 1st Runner-Up and Regional Champion, selected from 783 teams representing 213 schools"
+  }
 ];
 
 export default function ResumePage({ src }) {
@@ -43,6 +122,8 @@ export default function ResumePage({ src }) {
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
   const [showScrollHint, setShowScrollHint] = useState(false);
+  
+  const [expandedCert, setExpandedCert] = useState(null);
   const panelRef = useRef(null);
 
   useEffect(() => {
@@ -62,23 +143,25 @@ export default function ResumePage({ src }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate]);
 
-  useEffect(() => {
-    const checkScrollable = () => {
-      const panel = panelRef.current;
-      if (panel) {
-        const hasOverflow = panel.scrollHeight > panel.clientHeight;
-        const isAtBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 10;
-        setShowScrollHint(hasOverflow && !isAtBottom);
-      }
-    };
+  // Combined function to check scroll state
+  const checkScrollable = () => {
+    const panel = panelRef.current;
+    if (panel) {
+      const hasOverflow = panel.scrollHeight > panel.clientHeight;
+      const isAtBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 10;
+      setShowScrollHint(hasOverflow && !isAtBottom);
+    }
+  };
 
+  // Re-run scroll check on tab switch or when certificate expansion changes
+  useEffect(() => {
     const t = setTimeout(checkScrollable, 50);
     window.addEventListener("resize", checkScrollable);
     return () => {
       clearTimeout(t);
       window.removeEventListener("resize", checkScrollable);
     };
-  }, [active]);
+  }, [active, expandedCert]);
 
   const handleScroll = () => {
     const panel = panelRef.current;
@@ -86,6 +169,10 @@ export default function ResumePage({ src }) {
       const isAtBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 10;
       setShowScrollHint(!isAtBottom);
     }
+  };
+
+  const toggleCertImage = (index) => {
+    setExpandedCert(expandedCert === index ? null : index);
   };
 
   return (
@@ -139,24 +226,24 @@ export default function ResumePage({ src }) {
 
         .resume-stack {
           position: absolute;
-          top: 9vh;
+          top: 6vh;
           left: 2.8vw;
           width: min(47vw, 720px);
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
           pointer-events: none;
-          transform: scale(0.9);
+          transform: scale(0.85);
           transform-origin: top left;
         }
 
         .resume-list-tag {
           font-family: 'Anton', sans-serif;
-          font-size: 92px;
+          font-size: 82px;
           line-height: 0.9;
           color: #f6fbff;
           letter-spacing: 2px;
-          margin: 0 0 6px 12px;
+          margin: 0 0 4px 12px;
           text-shadow: 0 2px 0 rgba(0,0,0,0.5);
           opacity: 0;
           transform: translateX(-24px);
@@ -182,7 +269,7 @@ export default function ResumePage({ src }) {
 
         .resume-card {
           position: relative;
-          height: 112px;
+          height: 100px;
           background: #111111;
           border-left: 6px solid #d90429;
           clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
@@ -199,7 +286,7 @@ export default function ResumePage({ src }) {
         .resume-card-inner {
           position: absolute;
           inset: 0;
-          padding: 14px 22px 14px 62px;
+          padding: 12px 22px 12px 62px;
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
@@ -207,10 +294,10 @@ export default function ResumePage({ src }) {
 
         .resume-badge {
           position: absolute;
-          top: 10px;
+          top: 8px;
           left: -10px;
-          width: 56px;
-          height: 70px;
+          width: 52px;
+          height: 62px;
           background: #d90429;
           border: 3px solid #ffffff;
           clip-path: polygon(14% 0, 100% 0, 84% 100%, 0 100%);
@@ -223,7 +310,7 @@ export default function ResumePage({ src }) {
         }
         .resume-badge-text {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 36px;
+          font-size: 32px;
           color: #ffffff;
           letter-spacing: 1px;
           transform: rotate(8deg);
@@ -235,7 +322,7 @@ export default function ResumePage({ src }) {
 
         .resume-title {
           font-family: 'Anton', sans-serif;
-          font-size: 56px;
+          font-size: 48px;
           line-height: 0.9;
           letter-spacing: 1px;
           color: #ffffff;
@@ -254,14 +341,14 @@ export default function ResumePage({ src }) {
         }
         .resume-rank-label {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 28px;
+          font-size: 25px;
           letter-spacing: 2px;
           color: #ff4d6d;
           transition: color 0.22s ease;
         }
         .resume-rank-number {
           font-family: 'Anton', sans-serif;
-          font-size: 70px;
+          font-size: 60px;
           line-height: 0.82;
           color: #ff4d6d;
           transition: color 0.22s ease;
@@ -275,8 +362,8 @@ export default function ResumePage({ src }) {
           position: absolute;
           left: 64px;
           right: 14px;
-          bottom: 12px;
-          height: 34px;
+          bottom: 10px;
+          height: 30px;
           background: #d90429;
           clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
           display: flex;
@@ -290,7 +377,7 @@ export default function ResumePage({ src }) {
 
         .resume-subtitle {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 28px;
+          font-size: 24px;
           line-height: 1;
           letter-spacing: 1px;
           color: #ffffff;
@@ -424,16 +511,18 @@ export default function ResumePage({ src }) {
         }
         .resume-detail-row-title {
           font-family: 'Anton', sans-serif;
-          font-size: 24px;
+          font-size: 28px;
           line-height: 1;
           color: #f2fcff;
         }
         .resume-detail-row-details {
-          font-family: 'Anton', sans-serif;
-          font-size: 16px;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 23.5px;
+          font-weight: bold;
           line-height: 1.25;
+          letter-spacing: 1px;
           color: #000000;
-          background: #ffffff;
+          background: #f5f3f3;
           padding: 6px 12px;
           border-left: 4px solid #d90429;
           clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
@@ -470,31 +559,34 @@ export default function ResumePage({ src }) {
           transform: translateX(4px);
           background: rgba(40, 4, 8, 1);
         }
-        .resume-detail-bottom {
-          position: relative;
-          margin-top: 18px;
-          padding: 16px;
-          background: rgba(15, 2, 3, 0.97);
-          clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-          box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
-        }
-        .resume-detail-bottom-title {
+        .cert-action-btn {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
-          letter-spacing: 2px;
-          color: #ff4d6d;
-          margin-bottom: 10px;
+          font-size: 16px;
+          background: #d90429;
+          color: #ffffff;
+          border: none;
+          padding: 6px 12px;
+          cursor: pointer;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+          transition: background 0.2s ease;
+          pointer-events: auto;
         }
-        .resume-detail-bullets {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+        .cert-action-btn:hover {
+          background: #ef233c;
         }
-        .resume-detail-bullet {
-          font-family: 'Anton', sans-serif;
-          font-size: 19px;
-          line-height: 1.15;
-          color: #edfaff;
+        .cert-image-container {
+          margin-top: 10px;
+          padding: 8px;
+          background: #ffffff;
+          border-left: 4px solid #d90429;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+        }
+        .cert-image-preview {
+          width: 100%;
+          height: auto;
+          display: block;
+          object-fit: contain;
+          border-radius: 2px;
         }
       `}</style>
 
@@ -516,7 +608,7 @@ export default function ResumePage({ src }) {
                 <div className="resume-card-inner">
                   <div className="resume-title">{item.title}</div>
                   <div className="resume-rank">
-                    <div className="resume-rank-label">RANK</div>
+                    <div className="resume-rank-label">INFO</div>
                     <div className="resume-rank-number">{item.rank}</div>
                   </div>
                 </div>
@@ -528,32 +620,59 @@ export default function ResumePage({ src }) {
           ))}
         </div>
 
-        {/* EDUCATION PANEL */}
+        {/* 1. EDUCATION PANEL (Active === 0) */}
         {active === 0 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
               <div className="resume-detail-top">
                 <div className="resume-detail-top-index">01</div>
-                <div className="resume-detail-top-title">EDUCATION LOG</div>
-                <div className="resume-detail-top-progress">7/5</div>
+                <div className="resume-detail-top-title">EDUCATION</div>
+                <div className="resume-detail-top-progress">2/2</div>
               </div>
 
               <div className="resume-detail-list">
-                {EDUCATION_ROWS.map((row) => (
-                  <div className="resume-detail-row-standard" key={row.index}>
-                    <div className="resume-detail-row-index">{row.index}</div>
-                    <div className="resume-detail-row-title">{row.title}</div>
-                    <div className="resume-detail-status">{row.status}</div>
+                <div className="resume-detail-row">
+                  <div className="resume-detail-row-index">01</div>
+                  <div className="resume-detail-content-wrap">
+                    <div className="resume-detail-row-title">{EDUCATION_DETAILS.university}</div>
+                    <div className="resume-detail-row-details">{EDUCATION_DETAILS.degree}</div>
                   </div>
-                ))}
-              </div>
+                </div>
 
-              <div className="resume-detail-bottom">
-                <div className="resume-detail-bottom-title">DETAILS</div>
-                <div className="resume-detail-bullets">
-                  <div className="resume-detail-bullet">Maintain progress across required classes and supporting work.</div>
-                  <div className="resume-detail-bullet">Track portfolio-ready projects tied to coursework and labs.</div>
-                  <div className="resume-detail-bullet">Keep materials prepared for internships, research, and review.</div>
+                <div className="resume-detail-row" style={{ marginTop: "12px" }}>
+                  <div className="resume-detail-row-index">02</div>
+                  <div className="resume-detail-content-wrap">
+                    <div className="resume-detail-row-title">LEADERSHIP</div>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "6px" }}>
+                      {EDUCATION_DETAILS.leadership.map((lead, lIdx) => (
+                        <div key={lIdx} style={{ background: "#ffffff", padding: "8px 12px", borderLeft: "4px solid #d90429", clipPath: "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)" }}>
+                          <div style={{ fontFamily: "'Anton', sans-serif", fontSize: "19px", color: "#000000", marginBottom: "6px" }}>
+                            {lead.title}
+                          </div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                            {lead.bullets.map((bText, bIdx) => (
+                              <div 
+                                key={bIdx} 
+                                style={{ 
+                                  fontFamily: "'Bebas Neue', sans-serif", 
+                                  fontSize: "18px", 
+                                  color: "#000000", 
+                                  letterSpacing: "0.5px", 
+                                  lineHeight: "1.2", 
+                                  background: "#eae6e6", 
+                                  padding: "6px 10px", 
+                                  borderLeft: "3px solid #d90429",
+                                  clipPath: "polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%)"
+                                }}
+                              >
+                                {bText}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -561,12 +680,61 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* SKILLS PANEL */}
+        {/* 2. EXPERIENCE PANEL (Active === 1) */}
         {active === 1 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
               <div className="resume-detail-top">
                 <div className="resume-detail-top-index">02</div>
+                <div className="resume-detail-top-title">EXPERIENCE LOG</div>
+                <div className="resume-detail-top-progress">1/1</div>
+              </div>
+
+              <div className="resume-detail-list">
+                {EXPERIENCE_ROWS.map((row) => (
+                  <div className="resume-detail-row" key={row.index}>
+                    <div className="resume-detail-row-index">{row.index}</div>
+                    <div className="resume-detail-content-wrap">
+                      <div className="resume-detail-row-title">{row.title}</div>
+                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "20px", color: "#ff4d6d", letterSpacing: "1px", marginBottom: "6px" }}>
+                        {row.subtitle}
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "2px" }}>
+                        {row.details.map((detailText, dIdx) => (
+                          <div 
+                            key={dIdx} 
+                            style={{ 
+                              fontFamily: "'Bebas Neue', sans-serif", 
+                              fontSize: "21px", 
+                              fontWeight: "bold",
+                              letterSpacing: "0.8px", 
+                              lineHeight: "1.2", 
+                              color: "#000000", 
+                              background: "#f5f3f3", 
+                              padding: "8px 12px", 
+                              borderLeft: "4px solid #d90429", 
+                              clipPath: "polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%)" 
+                            }}
+                          >
+                            {detailText}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
+          </div>
+        )}
+
+        {/* 3. SKILLS PANEL (Active === 2) */}
+        {active === 2 && (
+          <div className="resume-panel-container">
+            <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
+              <div className="resume-detail-top">
+                <div className="resume-detail-top-index">03</div>
                 <div className="resume-detail-top-title">SKILLS MATRIX</div>
                 <div className="resume-detail-top-progress">8/8</div>
               </div>
@@ -587,66 +755,72 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* PROJECTS PANEL */}
-        {active === 2 && (
+        {/* 4. CERTIFICATIONS PANEL (Active === 3) */}
+        {active === 3 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
               <div className="resume-detail-top">
-                <div className="resume-detail-top-index">03</div>
-                <div className="resume-detail-top-title">FEATURED WORK</div>
-                <div className="resume-detail-top-progress">3/3</div>
+                <div className="resume-detail-top-index">04</div>
+                <div className="resume-detail-top-title">CREDENTIALS</div>
+                <div className="resume-detail-top-progress">4/4</div>
               </div>
 
               <div className="resume-detail-list">
-                {PROJECTS_ROWS.map((row) => (
-                  <div className="resume-detail-row-standard" key={row.index}>
-                    <div className="resume-detail-row-index">{row.index}</div>
-                    <div className="resume-detail-row-title">{row.title}</div>
-                    <div className="resume-detail-status">{row.status}</div>
-                  </div>
-                ))}
-              </div>
+                {CERTIFICATIONS_ROWS.map((row) => {
+                  const isExpanded = expandedCert === row.index;
+                  return (
+                    <div key={row.index} style={{ marginBottom: "10px" }}>
+                      <div className="resume-detail-row-standard">
+                        <div className="resume-detail-row-index">{row.index}</div>
+                        <div className="resume-detail-row-title">{row.title}</div>
+                        <button 
+                          className="cert-action-btn"
+                          onClick={() => toggleCertImage(row.index)}
+                        >
+                          {isExpanded ? "HIDE CERTIFICATE" : "SEE CERTIFICATE"}
+                        </button>
+                      </div>
 
-              <div className="resume-detail-bottom">
-                <div className="resume-detail-bottom-title">DETAILS</div>
-                <div className="resume-detail-bullets">
-                  <div className="resume-detail-bullet">Built high-performance full-stack web and mobile apps.</div>
-                  <div className="resume-detail-bullet">Integrated custom computer vision models with real-time tracking.</div>
-                  <div className="resume-detail-bullet">Developed interactive business intelligence dashboards and reporting pipelines.</div>
-                </div>
+                      {/* Expandable Image Container */}
+                      {isExpanded && (
+                        <div className="cert-image-container">
+                          <img 
+                            src={row.image} 
+                            alt={row.title} 
+                            className="cert-image-preview" 
+                            onLoad={checkScrollable}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
             {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
           </div>
         )}
 
-        {/* EXPERIENCE PANEL */}
-        {active === 3 && (
+        {/* 5. ACHIEVEMENTS PANEL (Active === 4) */}
+        {active === 4 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
               <div className="resume-detail-top">
-                <div className="resume-detail-top-index">04</div>
-                <div className="resume-detail-top-title">EXPERIENCE LOG</div>
-                <div className="resume-detail-top-progress">2/2</div>
+                <div className="resume-detail-top-index">05</div>
+                <div className="resume-detail-top-title">ACHIEVEMENTS</div>
+                <div className="resume-detail-top-progress">5/5</div>
               </div>
 
               <div className="resume-detail-list">
-                {EXPERIENCE_ROWS.map((row) => (
-                  <div className="resume-detail-row-standard" key={row.index}>
+                {ACHIEVEMENTS_ROWS.map((row) => (
+                  <div className="resume-detail-row" key={row.index}>
                     <div className="resume-detail-row-index">{row.index}</div>
-                    <div className="resume-detail-row-title">{row.title}</div>
-                    <div className="resume-detail-status">{row.status}</div>
+                    <div className="resume-detail-content-wrap">
+                      <div className="resume-detail-row-title">{row.title}</div>
+                      <div className="resume-detail-row-details">{row.details}</div>
+                    </div>
                   </div>
                 ))}
-              </div>
-
-              <div className="resume-detail-bottom">
-                <div className="resume-detail-bottom-title">DETAILS</div>
-                <div className="resume-detail-bullets">
-                  <div className="resume-detail-bullet">Designed and maintained scalable software infrastructure & workflows.</div>
-                  <div className="resume-detail-bullet">Executed multimedia campaigns, asset management, and UI design upgrades.</div>
-                  <div className="resume-detail-bullet">Collaborated across cross-functional teams to streamline digital solutions.</div>
-                </div>
               </div>
             </div>
             {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}

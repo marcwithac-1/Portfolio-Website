@@ -9,8 +9,8 @@ const GRAPHIC_PROJECTS = [
     title: "CYBERPUNK BRAND IDENTITY",
     subtitle: "Logo Design / Brand Guidelines / Vector Art",
     description: "Complete visual identity system designed for an indie synthwave music label, featuring custom typography, color theory standards, and promotional collateral.",
-    mediaType: "image", // "image" or "video"
-    mediaSrc: "/images/graphic1.png", // Replace with your image/video path
+    mediaType: "image",
+    mediaSrc: "/images/graphic1.png",
     tools: ["Illustrator", "Photoshop", "InDesign"],
   },
   {
@@ -47,8 +47,8 @@ const GRAPHIC_PROJECTS = [
 
 export default function GraphicDesignPage() {
   const navigate = useNavigate();
-  const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null); // For Lightbox Modal
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -57,18 +57,21 @@ export default function GraphicDesignPage() {
 
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "ArrowUp") setActive((i) => Math.max(0, i - 1));
-      if (e.key === "ArrowDown") setActive((i) => Math.min(GRAPHIC_PROJECTS.length - 1, i + 1));
-      if (e.key === "ArrowLeft" || e.key === "Escape" || e.key === "Backspace") {
-        navigate(-1);
+      if (e.key === "Escape" || e.key === "Backspace" || e.key === "ArrowLeft") {
+        if (selectedItem) {
+          setSelectedItem(null); // Close modal if open
+        } else {
+          navigate(-1); // Return back
+        }
       }
     };
 
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [navigate]);
+  }, [navigate, selectedItem]);
 
-  const currentProject = GRAPHIC_PROJECTS[active];
+  const imageProjects = GRAPHIC_PROJECTS.filter((p) => p.mediaType === "image");
+  const videoProjects = GRAPHIC_PROJECTS.filter((p) => p.mediaType === "video");
 
   return (
     <div className="graphic-screen">
@@ -92,17 +95,24 @@ export default function GraphicDesignPage() {
           position: relative;
           width: 100vw;
           height: 100vh;
-          overflow: hidden;
+          overflow-y: auto;
           background-color: #0b0b0b;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
           padding: 5vh 4vw;
           box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          gap: 30px;
+        }
+
+        .graphic-screen::-webkit-scrollbar {
+          width: 6px;
+        }
+        .graphic-screen::-webkit-scrollbar-thumb {
+          background: #ff2a2a;
         }
 
         .graphic-bg {
-          position: absolute;
+          position: fixed;
           inset: 0;
           z-index: 1;
           background-color: #0b0b0b;
@@ -122,317 +132,369 @@ export default function GraphicDesignPage() {
         .p5-video-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(0, 0, 0, 0.55);
+          background: rgba(0, 0, 0, 0.65);
           z-index: 2;
           pointer-events: none;
         }
 
-        /* Left Side: Design Navigation List */
-        .graphic-stack {
+        /* Header Section */
+        .graphic-header-container {
           position: relative;
           z-index: 10;
-          width: 42vw;
           display: flex;
-          flex-direction: column;
-          gap: 12px;
+          justify-content: space-between;
+          align-items: flex-end;
+          border-bottom: 3px solid #ff2a2a;
+          padding-bottom: 15px;
         }
 
         .graphic-header-title {
           font-family: 'Anton', sans-serif;
-          font-size: 70px;
+          font-size: 64px;
           line-height: 0.9;
           color: #ffffff;
           letter-spacing: 2px;
-          margin-bottom: 10px;
-          text-shadow: 0 4px 0 rgba(0,0,0,0.6);
+          text-shadow: 0 6px 0 rgba(0,0,0,0.8);
           opacity: 0;
-          transform: translateX(-30px);
+          transform: translateY(-20px);
           transition: opacity 0.4s ease, transform 0.4s ease;
         }
         .graphic-header-title.mounted {
           opacity: 1;
-          transform: translateX(0);
+          transform: translateY(0);
         }
 
-        .graphic-card-wrap {
-          position: relative;
-          opacity: 0;
-          transform: translateX(-40px);
-          transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-          cursor: pointer;
-          pointer-events: all;
-        }
-        .graphic-card-wrap.mounted {
-          opacity: 1;
-          transform: translateX(0);
-        }
-
-        .graphic-card {
-          position: relative;
-          height: 94px;
-          background: #111111;
-          border-left: 6px solid #ff2a2a;
-          clip-path: polygon(0 0, 97% 0, 100% 100%, 3% 100%);
-          box-shadow: 0 6px 0 rgba(0, 0, 0, 0.8);
-          transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-          display: flex;
-          align-items: center;
-          padding-left: 55px;
-          padding-right: 20px;
-        }
-
-        .graphic-card-wrap.active .graphic-card {
-          background: #ffffff;
-          box-shadow: 8px 6px 0 #ff2a2a;
-          transform: translateX(8px);
-        }
-
-        .graphic-badge {
-          position: absolute;
-          top: 8px;
-          left: -8px;
-          width: 46px;
-          height: 58px;
-          background: #ff2a2a;
-          border: 2px solid #ffffff;
-          clip-path: polygon(14% 0, 100% 0, 84% 100%, 0 100%);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transform: rotate(-6deg);
+        .graphic-back-hint {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
-          color: #ffffff;
-          box-shadow: 0 3px 0 rgba(0,0,0,0.3);
-          transition: background 0.2s ease, border-color 0.2s ease;
-        }
-        .graphic-card-wrap.active .graphic-badge {
-          background: #000000;
-          border-color: #000000;
-          color: #ffffff;
-        }
-
-        .graphic-card-info {
-          display: flex;
-          flex-direction: column;
-          width: 100%;
-        }
-
-        .graphic-title-text {
-          font-family: 'Anton', sans-serif;
-          font-size: 34px;
-          line-height: 1;
-          color: #ffffff;
-          letter-spacing: 1px;
-          transition: color 0.2s ease;
-        }
-        .graphic-card-wrap.active .graphic-title-text {
-          color: #000000;
-        }
-
-        .graphic-subtitle-text {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 19px;
+          font-size: 20px;
+          color: rgba(255,255,255,0.6);
           letter-spacing: 1.5px;
-          color: #ff6884;
-          transition: color 0.2s ease;
-          margin-top: 2px;
-        }
-        .graphic-card-wrap.active .graphic-subtitle-text {
-          color: #333333;
         }
 
-        /* Right Side: Media Showcase Panel */
-        .graphic-display-panel {
+        /* Gallery Sections */
+        .gallery-section {
           position: relative;
           z-index: 10;
-          width: 48vw;
-          min-height: 76vh;
-          background: linear-gradient(180deg, rgba(18, 2, 4, 0.96) 0%, rgba(8, 1, 2, 0.98) 100%);
-          border-left: 6px solid #ff2a2a;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-          box-shadow: inset 0 0 0 1px rgba(255, 42, 42, 0.3), 16px 16px 0 rgba(0,0,0,0.85);
-          padding: 30px;
-          box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          justify-content: space-between;
-          opacity: 0;
-          transform: translateX(30px);
-          animation: panelFadeIn 0.5s ease forwards 0.2s;
+          gap: 16px;
         }
 
-        @keyframes panelFadeIn {
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        .panel-top-bar {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          border-bottom: 2px solid rgba(255, 42, 42, 0.4);
-          padding-bottom: 14px;
-          margin-bottom: 18px;
-        }
-
-        .panel-badge-id {
+        .section-title {
           font-family: 'Anton', sans-serif;
-          font-size: 36px;
+          font-size: 32px;
           color: #ff2a2a;
-          background: #ffffff;
-          padding: 2px 14px;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+          letter-spacing: 1.5px;
+          text-shadow: 0 3px 0 rgba(0,0,0,0.8);
+          border-left: 5px solid #ff2a2a;
+          padding-left: 12px;
         }
 
-        .panel-tools-tags {
+        .gallery-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 20px;
+        }
+
+        /* Tile Card Styling */
+        .gallery-tile {
+          position: relative;
+          background: #111111;
+          border: 2px solid rgba(255, 42, 42, 0.3);
+          clip-path: polygon(0 0, 96% 0, 100% 4%, 100% 100%, 4% 100%, 0 96%);
+          box-shadow: 0 8px 0 rgba(0, 0, 0, 0.8);
+          cursor: pointer;
+          overflow: hidden;
+          transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
           display: flex;
-          gap: 8px;
-          flex-wrap: wrap;
+          flex-direction: column;
         }
 
-        .tool-pill {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 16px;
-          letter-spacing: 1px;
-          background: rgba(255, 42, 42, 0.2);
-          border: 1px solid #ff2a2a;
-          color: #ff99ab;
-          padding: 2px 10px;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+        .gallery-tile:hover {
+          transform: translateY(-6px);
+          border-color: #ff2a2a;
+          box-shadow: 6px 12px 0 rgba(255, 42, 42, 0.4);
         }
 
-        .panel-media-container {
+        .tile-media-box {
           position: relative;
           width: 100%;
-          height: 250px;
-          background: #000000;
-          border: 2px solid rgba(255, 42, 42, 0.5);
+          height: 180px;
+          background: #000;
           overflow: hidden;
-          margin-bottom: 18px;
+        }
+
+        .tile-media {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transition: transform 0.4s ease;
+        }
+
+        .gallery-tile:hover .tile-media {
+          transform: scale(1.05);
+        }
+
+        .tile-badge {
+          position: absolute;
+          top: 8px;
+          left: 8px;
+          background: #ff2a2a;
+          color: #ffffff;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 18px;
+          padding: 1px 10px;
+          clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+          box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+        }
+
+        .tile-content {
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          background: linear-gradient(180deg, rgba(18, 2, 4, 0.95) 0%, rgba(10, 1, 2, 0.98) 100%);
+          flex-grow: 1;
+        }
+
+        .tile-title {
+          font-family: 'Anton', sans-serif;
+          font-size: 22px;
+          color: #ffffff;
+          line-height: 1.1;
+          letter-spacing: 1px;
+        }
+
+        .tile-subtitle {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 15px;
+          color: #ff6884;
+          letter-spacing: 1px;
+        }
+
+        .tile-tools {
+          display: flex;
+          gap: 6px;
+          flex-wrap: wrap;
+          margin-top: 8px;
+        }
+
+        .tile-tool-pill {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 12px;
+          background: rgba(255, 42, 42, 0.15);
+          border: 1px solid rgba(255, 42, 42, 0.4);
+          color: #ff99ab;
+          padding: 1px 8px;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
+        }
+
+        /* Lightbox Modal Overlay */
+        .lightbox-overlay {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.85);
+          z-index: 100;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 4vw;
+          animation: fadeIn 0.2s ease forwards;
         }
 
-        .panel-media-img {
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .lightbox-content {
+          position: relative;
+          background: #110204;
+          border: 3px solid #ff2a2a;
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          max-width: 900px;
+          max-height: 90vh;
+          overflow-y: auto;
+          padding: 24px;
+          box-shadow: 12px 12px 0 rgba(255, 42, 42, 0.3);
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
         }
 
-        .panel-media-video {
+        .lightbox-media-container {
           width: 100%;
-          height: 100%;
-          object-fit: cover;
+          max-height: 50vh;
+          background: #000;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border: 1px solid rgba(255, 42, 42, 0.4);
         }
 
-        .panel-media-fallback {
-          color: #666;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
-          letter-spacing: 2px;
-          text-align: center;
-          padding: 20px;
+        .lightbox-media {
+          max-width: 100%;
+          max-height: 50vh;
+          object-fit: contain;
         }
 
-        .panel-title {
-          font-family: 'Anton', sans-serif;
-          font-size: 38px;
-          color: #ffffff;
-          line-height: 1;
-          letter-spacing: 1px;
-          margin-bottom: 10px;
-        }
-
-        .panel-description {
-          font-family: 'Anton', sans-serif;
-          font-size: 18px;
-          line-height: 1.3;
-          color: #cfd8dc;
-          font-weight: normal;
-        }
-
-        .panel-footer-hint {
-          margin-top: 20px;
+        .lightbox-header {
           display: flex;
           justify-content: space-between;
+          align-items: center;
+          border-bottom: 2px solid rgba(255, 42, 42, 0.3);
+          padding-bottom: 10px;
+        }
+
+        .lightbox-title {
+          font-family: 'Anton', sans-serif;
+          font-size: 32px;
+          color: #ffffff;
+          letter-spacing: 1px;
+        }
+
+        .lightbox-close-btn {
+          background: #ff2a2a;
+          border: none;
+          color: #fff;
           font-family: 'Bebas Neue', sans-serif;
           font-size: 18px;
-          color: rgba(255,255,255,0.4);
-          letter-spacing: 1px;
+          padding: 4px 14px;
+          cursor: pointer;
+          clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+          transition: background 0.2s;
+        }
+
+        .lightbox-close-btn:hover {
+          background: #ff526b;
+        }
+
+        .lightbox-desc {
+          font-family: 'Anton', sans-serif;
+          font-size: 16px;
+          color: #cfd8dc;
+          line-height: 1.4;
+          font-weight: normal;
         }
       `}</style>
 
-      {/* Left Menu Stack */}
-      <div className="graphic-stack">
+      {/* Header */}
+      <div className="graphic-header-container">
         <div className={`graphic-header-title ${mounted ? "mounted" : ""}`}>
-          GRAPHIC DESIGN
+          GRAPHIC DESIGN & MEDIA
         </div>
-        {GRAPHIC_PROJECTS.map((proj, index) => (
-          <div
-            key={proj.id}
-            className={`graphic-card-wrap ${active === index ? "active" : ""} ${mounted ? "mounted" : ""}`}
-            style={{ transitionDelay: `${index * 55}ms` }}
-            onMouseEnter={() => setActive(index)}
-            onClick={() => setActive(index)}
-          >
-            <div className="graphic-card">
-              <div className="graphic-badge">{proj.badge}</div>
-              <div className="graphic-card-info">
-                <div className="graphic-title-text">{proj.title}</div>
-                <div className="graphic-subtitle-text">{proj.subtitle}</div>
-              </div>
-            </div>
-          </div>
-        ))}
+        <div className="graphic-back-hint">PRESS ESC OR BACKSPACE TO RETURN</div>
       </div>
 
-      {/* Right Display Panel with Media Showcase */}
-      <div className="graphic-display-panel" key={currentProject.id}>
-        <div>
-          <div className="panel-top-bar">
-            <div className="panel-badge-id">{currentProject.badge}</div>
-            <div className="panel-tools-tags">
-              {currentProject.tools.map((tool, idx) => (
-                <span key={idx} className="tool-pill">{tool}</span>
+      {/* SECTION 1: IMAGES */}
+      <div className="gallery-section">
+        <div className="section-title">IMAGES & BRANDING</div>
+        <div className="gallery-grid">
+          {imageProjects.map((proj) => (
+            <div
+              key={proj.id}
+              className="gallery-tile"
+              onClick={() => setSelectedItem(proj)}
+            >
+              <div className="tile-media-box">
+                <div className="tile-badge">{proj.badge}</div>
+                {proj.mediaSrc ? (
+                  <img src={proj.mediaSrc} alt={proj.title} className="tile-media" />
+                ) : (
+                  <div className="panel-media-fallback">NO IMAGE</div>
+                )}
+              </div>
+              <div className="tile-content">
+                <div className="tile-title">{proj.title}</div>
+                <div className="tile-subtitle">{proj.subtitle}</div>
+                <div className="tile-tools">
+                  {proj.tools.map((t, idx) => (
+                    <span key={idx} className="tile-tool-pill">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* SECTION 2: VIDEOS */}
+      <div className="gallery-section">
+        <div className="section-title">VIDEOS & MOTION GRAPHICS</div>
+        <div className="gallery-grid">
+          {videoProjects.map((proj) => (
+            <div
+              key={proj.id}
+              className="gallery-tile"
+              onClick={() => setSelectedItem(proj)}
+            >
+              <div className="tile-media-box">
+                <div className="tile-badge">{proj.badge}</div>
+                {proj.mediaSrc ? (
+                  <video src={proj.mediaSrc} className="tile-media" muted playsInline />
+                ) : (
+                  <div className="panel-media-fallback">NO VIDEO</div>
+                )}
+              </div>
+              <div className="tile-content">
+                <div className="tile-title">{proj.title}</div>
+                <div className="tile-subtitle">{proj.subtitle}</div>
+                <div className="tile-tools">
+                  {proj.tools.map((t, idx) => (
+                    <span key={idx} className="tile-tool-pill">{t}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* LIGHTBOX MODAL FOR DETAILED VIEW */}
+      {selectedItem && (
+        <div className="lightbox-overlay" onClick={() => setSelectedItem(null)}>
+          <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
+            <div className="lightbox-header">
+              <div className="lightbox-title">{selectedItem.title}</div>
+              <button className="lightbox-close-btn" onClick={() => setSelectedItem(null)}>
+                CLOSE [ESC]
+              </button>
+            </div>
+
+            <div className="lightbox-media-container">
+              {selectedItem.mediaType === "video" ? (
+                <video
+                  src={selectedItem.mediaSrc}
+                  className="lightbox-media"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <img
+                  src={selectedItem.mediaSrc}
+                  alt={selectedItem.title}
+                  className="lightbox-media"
+                />
+              )}
+            </div>
+
+            <div className="tile-subtitle" style={{ fontSize: "18px" }}>
+              {selectedItem.subtitle}
+            </div>
+            <div className="lightbox-desc">{selectedItem.description}</div>
+
+            <div className="tile-tools" style={{ marginTop: "4px" }}>
+              {selectedItem.tools.map((t, idx) => (
+                <span key={idx} className="tile-tool-pill" style={{ fontSize: "14px", padding: "2px 10px" }}>
+                  {t}
+                </span>
               ))}
             </div>
           </div>
-
-          {/* Media Showcase Section (Image or Video) */}
-          <div className="panel-media-container">
-            {currentProject.mediaType === "video" ? (
-              <video
-                className="panel-media-video"
-                src={currentProject.mediaSrc}
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
-            ) : currentProject.mediaType === "image" && currentProject.mediaSrc ? (
-              <img
-                className="panel-media-img"
-                src={currentProject.mediaSrc}
-                alt={currentProject.title}
-              />
-            ) : (
-              <div className="panel-media-fallback">NO MEDIA PREVIEW AVAILABLE</div>
-            )}
-          </div>
-
-          <div className="panel-title">{currentProject.title}</div>
-          <div className="panel-description">{currentProject.description}</div>
         </div>
-
-        <div className="panel-footer-hint">
-          <span>USE ↑↓ TO NAVIGATE PROJECTS</span>
-          <span>PRESS ← OR ESC TO RETURN</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
