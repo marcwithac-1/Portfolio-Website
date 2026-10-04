@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import myVideoFile from "./assets/buildings red3.mp4";
 
@@ -16,10 +16,34 @@ const EDUCATION_ROWS = [
   { index: "04", title: "Capstone Prep", status: "Pending" },
 ];
 
+const SKILLS_ROWS = [
+  { index: "01", title: "Programming Languages", details: "Python, Java, JavaScript, SQL, HTML/CSS, PHP, C/C++" },
+  { index: "02", title: "Mobile App Development", details: "Flutter, Dart, Android Studio, Firebase, Mobile UI Development" },
+  { index: "03", title: "Developer Tools & Platforms", details: "VS Code, Jupyter Notebook, Google Colab, Power BI, Looker Studio, Roboflow, Figma, Git/GitHub" },
+  { index: "04", title: "Frameworks & Libraries", details: "YOLOv8, TensorFlow, Keras, PyTorch, Pandas, NumPy, Matplotlib, Scikit-learn, OpenCV, ByteTrack" },
+  { index: "05", title: "Data Analytics & BI", details: "Microsoft Power BI, Google Looker Studio, Dashboard Dev, Data Visualization, KPI Reporting" },
+  { index: "06", title: "AI & Automation", details: "Conversational AI, Chatbot Design, Storyflow Dev, Workflow Automation, Machine Learning, Computer Vision, Power Automate" },
+  { index: "07", title: "Web & Digital Solutions", details: "Website Migration, Front-End Optimization, Content Management, User Experience Enhancement" },
+  { index: "08", title: "Graphic Design & Multimedia", details: "Adobe Photoshop, Premiere Pro, After Effects, Canva, Video Editing, Illustrator, Mixed Media, Content Creation" },
+];
+
+const PROJECTS_ROWS = [
+  { index: "01", title: "AI Computer Vision System", status: "Deployed" },
+  { index: "02", title: "Mobile App Ecosystem", status: "Active" },
+  { index: "03", title: "BI & Analytics Dashboard", status: "Complete" },
+];
+
+const EXPERIENCE_ROWS = [
+  { index: "01", title: "Software & AI Developer", status: "Current" },
+  { index: "02", title: "UI/UX & Multimedia Intern", status: "Finished" },
+];
+
 export default function ResumePage({ src }) {
   const navigate = useNavigate();
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [showScrollHint, setShowScrollHint] = useState(false);
+  const panelRef = useRef(null);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -37,6 +61,32 @@ export default function ResumePage({ src }) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate]);
+
+  useEffect(() => {
+    const checkScrollable = () => {
+      const panel = panelRef.current;
+      if (panel) {
+        const hasOverflow = panel.scrollHeight > panel.clientHeight;
+        const isAtBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 10;
+        setShowScrollHint(hasOverflow && !isAtBottom);
+      }
+    };
+
+    const t = setTimeout(checkScrollable, 50);
+    window.addEventListener("resize", checkScrollable);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("resize", checkScrollable);
+    };
+  }, [active]);
+
+  const handleScroll = () => {
+    const panel = panelRef.current;
+    if (panel) {
+      const isAtBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 10;
+      setShowScrollHint(!isAtBottom);
+    }
+  };
 
   return (
     <div id="menu-screen" className="p5-bg-container">
@@ -75,84 +125,9 @@ export default function ResumePage({ src }) {
         .p5-video-overlay {
           position: absolute;
           inset: 0;
-          background: rgba(0, 0, 0, 0.45); /* Adjust opacity to darken the video if needed */
+          background: rgba(0, 0, 0, 0.45);
           z-index: 2;
           pointer-events: none;
-        }
-
-        .p5-background {
-          position: absolute;
-          inset: 0;
-          z-index: 1;
-          background: linear-gradient(135deg, #800e13 0%, #1a0203 50%, #000000 100%);
-          overflow: hidden;
-        }
-
-        /* Moving Red Slanted Vertical Lines */
-        .p5-red-stripes {
-          position: absolute;
-          inset: -50%;
-          width: 200%;
-          height: 200%;
-          background: repeating-linear-gradient(
-            -75deg,
-            transparent,
-            transparent 35px,
-            rgba(217, 4, 41, 0.35) 35px,
-            rgba(217, 4, 41, 0.35) 70px,
-            rgba(0, 0, 0, 0.6) 70px,
-            rgba(0, 0, 0, 0.6) 85px,
-            rgba(239, 35, 60, 0.5) 85px,
-            rgba(239, 35, 60, 0.5) 120px
-          );
-          transform: rotate(15deg);
-          animation: p5StripeMove 18s linear infinite;
-        }
-
-        @keyframes p5StripeMove {
-          0% {
-            background-position: 0 0;
-          }
-          100% {
-            background-position: 500px 500px;
-          }
-        }
-
-        /* Subtle Halftone Pattern Overlay for P5 comic texture */
-        .p5-halftone {
-          position: absolute;
-          inset: 0;
-          background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
-          background-size: 16px 16px;
-          pointer-events: none;
-        }
-
-        .p5-vignette {
-          position: absolute;
-          inset: 0;
-          background: radial-gradient(circle, transparent 40%, rgba(0,0,0,0.85) 100%);
-          pointer-events: none;
-        }
-
-        .resume-entry-mask {
-          position: absolute;
-          inset: 0;
-          z-index: 9;
-          overflow: hidden;
-          clip-path: circle(0 at 50% 50%);
-          animation: resume-entry-reveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-          pointer-events: none;
-        }
-
-        .resume-entry-fill {
-          position: absolute;
-          inset: 0;
-          background: #d90429;
-        }
-
-        @keyframes resume-entry-reveal {
-          from { clip-path: circle(0 at 50% 50%); }
-          to { clip-path: circle(150vmax at 50% 50%); }
         }
 
         .resume-overlay {
@@ -257,9 +232,6 @@ export default function ResumePage({ src }) {
           background: #000000;
           border-color: #000000;
         }
-        .resume-card-wrap.active .resume-badge-text {
-          color: #fff;
-        }
 
         .resume-title {
           font-family: 'Anton', sans-serif;
@@ -322,19 +294,22 @@ export default function ResumePage({ src }) {
           line-height: 1;
           letter-spacing: 1px;
           color: #ffffff;
-          transition: color 0.22s ease;
         }
-        .resume-card-wrap.active .resume-subtitle {
-          color: #fff;
+
+        /* Scrollable Detail Panel Styling with Wrapper for Indicator */
+        .resume-panel-container {
+          position: absolute;
+          top: 9vh;
+          right: 4.5vw;
+          width: min(44vw, 680px);
+          max-height: 82vh;
+          z-index: 12;
+          pointer-events: auto;
         }
 
         .resume-detail-panel {
-          position: absolute;
-          top: 9.5vh;
-          right: 4.5vw;
-          width: min(39vw, 620px);
-          min-height: 74vh;
-          z-index: 12;
+          width: 100%;
+          max-height: 82vh;
           padding: 22px 24px 24px 24px;
           background: linear-gradient(180deg, rgba(20, 2, 4, 0.96) 0%, rgba(10, 1, 2, 0.97) 100%);
           border-left: 6px solid #d90429;
@@ -342,17 +317,47 @@ export default function ResumePage({ src }) {
           box-shadow:
             inset 0 0 0 1px rgba(217, 4, 41, 0.3),
             16px 16px 0 rgba(0, 0, 0, 0.85);
-          overflow: hidden;
+          overflow-y: auto;
         }
-        .resume-detail-panel::before {
-          content: "";
+
+        /* Custom Scrollbar for P5 aesthetic */
+        .resume-detail-panel::-webkit-scrollbar {
+          width: 8px;
+        }
+        .resume-detail-panel::-webkit-scrollbar-track {
+          background: rgba(10, 1, 2, 0.9);
+        }
+        .resume-detail-panel::-webkit-scrollbar-thumb {
+          background: #d90429;
+          border-radius: 2px;
+        }
+        .resume-detail-panel::-webkit-scrollbar-thumb:hover {
+          background: #ef233c;
+        }
+
+        /* Scroll Down Indicator Badge */
+        .scroll-down-indicator {
           position: absolute;
-          inset: 0;
-          background:
-            linear-gradient(135deg, rgba(217, 4, 41, 0.08) 0 15%, transparent 15% 100%),
-            linear-gradient(180deg, rgba(255,255,255,0.05), transparent 24%);
+          bottom: 12px;
+          right: 28px;
+          background: #d90429;
+          color: #ffffff;
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 16px;
+          letter-spacing: 1.5px;
+          padding: 4px 12px;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+          z-index: 15;
           pointer-events: none;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+          animation: bounceIndicator 1.4s ease-in-out infinite;
         }
+
+        @keyframes bounceIndicator {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(5px); }
+        }
+
         .resume-detail-top {
           position: relative;
           display: grid;
@@ -373,7 +378,7 @@ export default function ResumePage({ src }) {
         }
         .resume-detail-top-title {
           font-family: 'Anton', sans-serif;
-          font-size: 42px;
+          font-size: 38px;
           line-height: 0.92;
           letter-spacing: 1px;
         }
@@ -392,13 +397,12 @@ export default function ResumePage({ src }) {
         }
         .resume-detail-row {
           display: grid;
-          grid-template-columns: 50px 1fr auto;
-          align-items: center;
-          gap: 14px;
-          min-height: 56px;
-          padding: 0 14px;
+          grid-template-columns: 45px 1fr;
+          align-items: start;
+          gap: 12px;
+          padding: 12px 14px;
           background: rgba(20, 2, 4, 0.96);
-          clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          clip-path: polygon(0 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
           box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
           transition: transform 0.16s ease, background 0.16s ease;
         }
@@ -408,50 +412,87 @@ export default function ResumePage({ src }) {
         }
         .resume-detail-row-index {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 26px;
+          font-size: 24px;
           letter-spacing: 1px;
           color: #ff4d6d;
+          padding-top: 2px;
+        }
+        .resume-detail-content-wrap {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
         }
         .resume-detail-row-title {
           font-family: 'Anton', sans-serif;
-          font-size: 28px;
+          font-size: 24px;
           line-height: 1;
           color: #f2fcff;
         }
+        .resume-detail-row-details {
+          font-family: 'Anton', sans-serif;
+          font-size: 16px;
+          line-height: 1.25;
+          color: #000000;
+          background: #ffffff;
+          padding: 6px 12px;
+          border-left: 4px solid #d90429;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          margin-top: 4px;
+        }
         .resume-detail-status {
           font-family: 'Bebas Neue', sans-serif;
--          font-size: 22px;
+          font-size: 18px;
           line-height: 1;
           letter-spacing: 1.1px;
           color: #ffffff;
           background: #d90429;
-          padding: 7px 12px;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+          padding: 5px 10px;
+          clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
+          max-width: 250px;
+          text-align: right;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .resume-detail-row-standard {
+          display: grid;
+          grid-template-columns: 45px 1fr auto;
+          align-items: center;
+          gap: 12px;
+          min-height: 50px;
+          padding: 0 14px;
+          background: rgba(20, 2, 4, 0.96);
+          clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
+          transition: transform 0.16s ease, background 0.16s ease;
+        }
+        .resume-detail-row-standard:hover {
+          transform: translateX(4px);
+          background: rgba(40, 4, 8, 1);
         }
         .resume-detail-bottom {
           position: relative;
-          margin-top: 22px;
-          padding: 18px;
+          margin-top: 18px;
+          padding: 16px;
           background: rgba(15, 2, 3, 0.97);
           clip-path: polygon(0 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
           box-shadow: inset 0 0 0 1px rgba(239, 35, 60, 0.25);
         }
         .resume-detail-bottom-title {
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 30px;
+          font-size: 26px;
           letter-spacing: 2px;
           color: #ff4d6d;
-          margin-bottom: 14px;
+          margin-bottom: 10px;
         }
         .resume-detail-bullets {
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
         }
-          
         .resume-detail-bullet {
           font-family: 'Anton', sans-serif;
-          font-size: 21px;
+          font-size: 19px;
           line-height: 1.15;
           color: #edfaff;
         }
@@ -465,12 +506,8 @@ export default function ResumePage({ src }) {
               key={item.id}
               className={`resume-card-wrap${active === index ? " active" : ""}${mounted ? " mounted" : ""}`}
               style={{ transitionDelay: `${index * 55}ms` }}
-              onMouseEnter={() => {
-                setActive(index);
-              }}
-              onClick={() => {
-                setActive(index);
-              }}
+              onMouseEnter={() => setActive(index)}
+              onClick={() => setActive(index)}
             >
               <div className="resume-card">
                 <div className="resume-badge">
@@ -491,32 +528,128 @@ export default function ResumePage({ src }) {
           ))}
         </div>
 
+        {/* EDUCATION PANEL */}
         {active === 0 && (
-          <div className="resume-detail-panel">
-            <div className="resume-detail-top">
-              <div className="resume-detail-top-index">01</div>
-              <div className="resume-detail-top-title">EDUCATION LOG</div>
-              <div className="resume-detail-top-progress">7/5</div>
-            </div>
+          <div className="resume-panel-container">
+            <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
+              <div className="resume-detail-top">
+                <div className="resume-detail-top-index">01</div>
+                <div className="resume-detail-top-title">EDUCATION LOG</div>
+                <div className="resume-detail-top-progress">7/5</div>
+              </div>
 
-            <div className="resume-detail-list">
-              {EDUCATION_ROWS.map((row) => (
-                <div className="resume-detail-row" key={row.index}>
-                  <div className="resume-detail-row-index">{row.index}</div>
-                  <div className="resume-detail-row-title">{row.title}</div>
-                  <div className="resume-detail-status">{row.status}</div>
+              <div className="resume-detail-list">
+                {EDUCATION_ROWS.map((row) => (
+                  <div className="resume-detail-row-standard" key={row.index}>
+                    <div className="resume-detail-row-index">{row.index}</div>
+                    <div className="resume-detail-row-title">{row.title}</div>
+                    <div className="resume-detail-status">{row.status}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="resume-detail-bottom">
+                <div className="resume-detail-bottom-title">DETAILS</div>
+                <div className="resume-detail-bullets">
+                  <div className="resume-detail-bullet">Maintain progress across required classes and supporting work.</div>
+                  <div className="resume-detail-bullet">Track portfolio-ready projects tied to coursework and labs.</div>
+                  <div className="resume-detail-bullet">Keep materials prepared for internships, research, and review.</div>
                 </div>
-              ))}
-            </div>
-
-            <div className="resume-detail-bottom">
-              <div className="resume-detail-bottom-title">DETAILS</div>
-              <div className="resume-detail-bullets">
-                <div className="resume-detail-bullet">Maintain progress across required classes and supporting work.</div>
-                <div className="resume-detail-bullet">Track portfolio-ready projects tied to coursework and labs.</div>
-                <div className="resume-detail-bullet">Keep materials prepared for internships, research, and review.</div>
               </div>
             </div>
+            {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
+          </div>
+        )}
+
+        {/* SKILLS PANEL */}
+        {active === 1 && (
+          <div className="resume-panel-container">
+            <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
+              <div className="resume-detail-top">
+                <div className="resume-detail-top-index">02</div>
+                <div className="resume-detail-top-title">SKILLS MATRIX</div>
+                <div className="resume-detail-top-progress">8/8</div>
+              </div>
+
+              <div className="resume-detail-list">
+                {SKILLS_ROWS.map((row) => (
+                  <div className="resume-detail-row" key={row.index}>
+                    <div className="resume-detail-row-index">{row.index}</div>
+                    <div className="resume-detail-content-wrap">
+                      <div className="resume-detail-row-title">{row.title}</div>
+                      <div className="resume-detail-row-details">{row.details}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
+          </div>
+        )}
+
+        {/* PROJECTS PANEL */}
+        {active === 2 && (
+          <div className="resume-panel-container">
+            <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
+              <div className="resume-detail-top">
+                <div className="resume-detail-top-index">03</div>
+                <div className="resume-detail-top-title">FEATURED WORK</div>
+                <div className="resume-detail-top-progress">3/3</div>
+              </div>
+
+              <div className="resume-detail-list">
+                {PROJECTS_ROWS.map((row) => (
+                  <div className="resume-detail-row-standard" key={row.index}>
+                    <div className="resume-detail-row-index">{row.index}</div>
+                    <div className="resume-detail-row-title">{row.title}</div>
+                    <div className="resume-detail-status">{row.status}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="resume-detail-bottom">
+                <div className="resume-detail-bottom-title">DETAILS</div>
+                <div className="resume-detail-bullets">
+                  <div className="resume-detail-bullet">Built high-performance full-stack web and mobile apps.</div>
+                  <div className="resume-detail-bullet">Integrated custom computer vision models with real-time tracking.</div>
+                  <div className="resume-detail-bullet">Developed interactive business intelligence dashboards and reporting pipelines.</div>
+                </div>
+              </div>
+            </div>
+            {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
+          </div>
+        )}
+
+        {/* EXPERIENCE PANEL */}
+        {active === 3 && (
+          <div className="resume-panel-container">
+            <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
+              <div className="resume-detail-top">
+                <div className="resume-detail-top-index">04</div>
+                <div className="resume-detail-top-title">EXPERIENCE LOG</div>
+                <div className="resume-detail-top-progress">2/2</div>
+              </div>
+
+              <div className="resume-detail-list">
+                {EXPERIENCE_ROWS.map((row) => (
+                  <div className="resume-detail-row-standard" key={row.index}>
+                    <div className="resume-detail-row-index">{row.index}</div>
+                    <div className="resume-detail-row-title">{row.title}</div>
+                    <div className="resume-detail-status">{row.status}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="resume-detail-bottom">
+                <div className="resume-detail-bottom-title">DETAILS</div>
+                <div className="resume-detail-bullets">
+                  <div className="resume-detail-bullet">Designed and maintained scalable software infrastructure & workflows.</div>
+                  <div className="resume-detail-bullet">Executed multimedia campaigns, asset management, and UI design upgrades.</div>
+                  <div className="resume-detail-bullet">Collaborated across cross-functional teams to streamline digital solutions.</div>
+                </div>
+              </div>
+            </div>
+            {showScrollHint && <div className="scroll-down-indicator">▼ SCROLL DOWN</div>}
           </div>
         )}
       </div>

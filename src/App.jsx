@@ -5,7 +5,8 @@ import main1 from './assets/red bg.mp4'
 import main2 from './assets/red bg.mp4'
 import main3 from './assets/red bg.mp4'
 import P3Menu from './P3Menu'
-import ProjectsPage from "./ProjectsPage";
+import ProjectsPage from "./ProjectsPage"
+import GraphicDesignPage from "./GraphicDesignPage" // <-- 1. Import your new Graphic Design page
 import VideoPage from './VideoPage'
 import ResumePage from './ResumePage'
 import PageTransition from './PageTransition'
@@ -39,6 +40,10 @@ function AnimatedRoutes() {
         } />
         <Route path="/github" element={
           <PageTransition variant="github"><ProjectsPage /></PageTransition>
+        } />
+        {/* 2. Add the route for Graphic Design matching the 'sideproj' page key */}
+        <Route path="/sideproj" element={
+          <PageTransition variant="sideproj"><GraphicDesignPage /></PageTransition>
         } />
         <Route path="/socials" element={
           <PageTransition variant="socials"><Socials /></PageTransition>
