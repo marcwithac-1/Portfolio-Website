@@ -14,8 +14,8 @@ const PROJECTS = [
     subtitle: "Computer Vision / Machine Learning / IoT & Hardware",
     description: "A smart pig monitoring system for continuous, non-contact health and behavioral analysis using computer vision, environmental sensors, and IoT hardware.",
     contributions: [
-      "Software: Annotated 11K frames using Roboflow, trained YOLOv8 for behavior detection, implemented DeepSORT for continuous pig ID tracking, and synced sensor-to-mobile data pipelines via Firebase.",
-      "Hardware: Built an IoT-ready CCTV device (Arduino, ESP32-CAM, temperature, humidity, and luminance sensors) and 3D-printed a custom protective hardware casing.",
+      "Software: Annotated big dataset using Roboflow, trained YOLOv8 for behavior detection, implemented DeepSORT for continuous pig ID tracking, and synced sensor-to-mobile data pipelines via Firebase.",
+      "Hardware: Built an IoT-ready CCTV device using Arduino and ESP32 based parts and 3D-printed a custom protective hardware casing.",
       "Media: Created the project logo, poster, visual assets, and promotional video."
     ],
     videoSrc: swineScanVid,
@@ -37,7 +37,7 @@ const PROJECTS = [
   {
     id: "proj-3",
     badge: "03",
-    title: "ETA: SMART TRAVEL",
+    title: "ETA: Expect Timely Arrival",
     subtitle: "Mobile App / A* Algorithm / OpenStreetMap",
     description: "A smart travel guide application designed to reduce commuter travel times by calculating the most efficient routes using the A* pathfinding algorithm.",
     contributions: [

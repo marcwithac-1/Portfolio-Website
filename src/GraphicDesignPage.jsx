@@ -1,47 +1,57 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bgVideo from "./assets/city red 2.mp4"; // Adjust path if necessary
+import swineScanImg from "./assets/Swine Scan Poster.jpg";
+import southSideImg from "./assets/South Side Ballers League Poster.jpg";
+import ryujinImg from "./assets/Ryujin Tunnel Vision Poster.jpg";
+import winterImg from "./assets/Aespa Winter Lemonade Poster.jpg";
+import giselleImg from "./assets/Aespa Giselle Poster.jpg";
+import chisaImg from "./assets/XG Chisa Poster.png";
+import laufeyImg from "./assets/Laufey Slow Down.jpg";
+import codexImg from "./assets/codex poster.jpg";
+import chimacImg from "./assets/Chimac Solutions_Poster.jpg";
+import egamesImg from "./assets/egames poster.jpg";
+import hightideImg from "./assets/high tide.jpg";
+import csnightVid from "./assets/CS Night Edit.mp4";
+import swinescanVid from "./assets/Swine Scan PSC Pitch Deck.mp4";
+import salayliwaVid from "./assets/Salayliwa.mp4";
+import codexVid from "./assets/CODEX Infomercial - Design Thinking Competition - Terr (720p).mp4";
+import newjeansVid from "./assets/newjeans just a dream.mp4";
+import fragileVid from "./assets/Fragile.mp4";
+import ssbawardsVid from "./assets/South Side Ballers Awards.mp4";
+import day1hypeVid from "./assets/South Side Ballers League Day 1 Hype Video.mp4";
+import day2hypeVid from "./assets/South Side Ballers League Day 2 Hype Video.mp4";
+import day1highlightsVid from "./assets/South Side Ballers League Day 1 Highlights.mp4";
+import hightideVid from "./assets/High Tide - Valorant Montage Edit.mp4";
 
 const GRAPHIC_PROJECTS = [
   {
     id: "gd-1",
     badge: "01",
-    title: "CYBERPUNK BRAND IDENTITY",
-    subtitle: "Logo Design / Brand Guidelines / Vector Art",
-    description: "Complete visual identity system designed for an indie synthwave music label, featuring custom typography, color theory standards, and promotional collateral.",
+    title: "SWINE SCAN - CS EXPO POSTER",
     mediaType: "image",
-    mediaSrc: "/images/graphic1.png",
-    tools: ["Illustrator", "Photoshop", "InDesign"],
+    mediaSrc: swineScanImg,
   },
   {
     id: "gd-2",
     badge: "02",
-    title: "NEON MOTION POSTER",
-    subtitle: "Motion Graphics / VFX / Typography",
-    description: "An animated promotional poster loop created for a virtual techno concert event, emphasizing heavy chromatic aberration and glitch effects.",
-    mediaType: "video",
-    mediaSrc: "/videos/graphic2.mp4",
-    tools: ["After Effects", "Premiere", "Cinema 4D"],
+    title: "SOUTH SIDE BALLERS LEAGUE POSTER",
+    mediaType: "image",
+    mediaSrc: southSideImg,
   },
   {
     id: "gd-3",
     badge: "03",
     title: "RETRO ARCADE PACKAGING",
-    subtitle: "Product Packaging / 3D Mockup / Illustration",
-    description: "Physical box design and merchandise layout inspired by 90s Japanese arcade cabinets and collectible game cartridges.",
     mediaType: "image",
     mediaSrc: "/images/graphic3.png",
-    tools: ["Photoshop", "Blender", "Illustrator"],
   },
   {
     id: "gd-4",
     badge: "04",
     title: "EDITORIAL MAGAZINE SPREAD",
-    subtitle: "Layout Design / Typography / Editorial",
-    description: "A multi-page magazine layout exploring brutalist grid structures, high-contrast typography, and asymmetrical image placements.",
     mediaType: "image",
     mediaSrc: "/images/graphic4.png",
-    tools: ["InDesign", "Photoshop"],
   },
 ];
 
@@ -219,7 +229,7 @@ export default function GraphicDesignPage() {
         .tile-media-box {
           position: relative;
           width: 100%;
-          height: 180px;
+          height: 200px;
           background: #000;
           overflow: hidden;
         }
@@ -252,9 +262,9 @@ export default function GraphicDesignPage() {
           padding: 16px;
           display: flex;
           flex-direction: column;
-          gap: 6px;
           background: linear-gradient(180deg, rgba(18, 2, 4, 0.95) 0%, rgba(10, 1, 2, 0.98) 100%);
           flex-grow: 1;
+          justify-content: center;
         }
 
         .tile-title {
@@ -263,30 +273,6 @@ export default function GraphicDesignPage() {
           color: #ffffff;
           line-height: 1.1;
           letter-spacing: 1px;
-        }
-
-        .tile-subtitle {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 15px;
-          color: #ff6884;
-          letter-spacing: 1px;
-        }
-
-        .tile-tools {
-          display: flex;
-          gap: 6px;
-          flex-wrap: wrap;
-          margin-top: 8px;
-        }
-
-        .tile-tool-pill {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 12px;
-          background: rgba(255, 42, 42, 0.15);
-          border: 1px solid rgba(255, 42, 42, 0.4);
-          color: #ff99ab;
-          padding: 1px 8px;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
         }
 
         /* Lightbox Modal Overlay */
@@ -324,7 +310,7 @@ export default function GraphicDesignPage() {
 
         .lightbox-media-container {
           width: 100%;
-          max-height: 50vh;
+          max-height: 65vh;
           background: #000;
           display: flex;
           align-items: center;
@@ -335,7 +321,7 @@ export default function GraphicDesignPage() {
 
         .lightbox-media {
           max-width: 100%;
-          max-height: 50vh;
+          max-height: 65vh;
           object-fit: contain;
         }
 
@@ -369,14 +355,6 @@ export default function GraphicDesignPage() {
         .lightbox-close-btn:hover {
           background: #ff526b;
         }
-
-        .lightbox-desc {
-          font-family: 'Anton', sans-serif;
-          font-size: 16px;
-          color: #cfd8dc;
-          line-height: 1.4;
-          font-weight: normal;
-        }
       `}</style>
 
       {/* Header */}
@@ -384,7 +362,7 @@ export default function GraphicDesignPage() {
         <div className={`graphic-header-title ${mounted ? "mounted" : ""}`}>
           GRAPHIC DESIGN & MEDIA
         </div>
-        <div className="graphic-back-hint">PRESS ESC OR BACKSPACE TO RETURN</div>
+        <div className="graphic-back-hint"></div>
       </div>
 
       {/* SECTION 1: IMAGES */}
@@ -407,12 +385,6 @@ export default function GraphicDesignPage() {
               </div>
               <div className="tile-content">
                 <div className="tile-title">{proj.title}</div>
-                <div className="tile-subtitle">{proj.subtitle}</div>
-                <div className="tile-tools">
-                  {proj.tools.map((t, idx) => (
-                    <span key={idx} className="tile-tool-pill">{t}</span>
-                  ))}
-                </div>
               </div>
             </div>
           ))}
@@ -439,12 +411,6 @@ export default function GraphicDesignPage() {
               </div>
               <div className="tile-content">
                 <div className="tile-title">{proj.title}</div>
-                <div className="tile-subtitle">{proj.subtitle}</div>
-                <div className="tile-tools">
-                  {proj.tools.map((t, idx) => (
-                    <span key={idx} className="tile-tool-pill">{t}</span>
-                  ))}
-                </div>
               </div>
             </div>
           ))}
@@ -478,19 +444,6 @@ export default function GraphicDesignPage() {
                   className="lightbox-media"
                 />
               )}
-            </div>
-
-            <div className="tile-subtitle" style={{ fontSize: "18px" }}>
-              {selectedItem.subtitle}
-            </div>
-            <div className="lightbox-desc">{selectedItem.description}</div>
-
-            <div className="tile-tools" style={{ marginTop: "4px" }}>
-              {selectedItem.tools.map((t, idx) => (
-                <span key={idx} className="tile-tool-pill" style={{ fontSize: "14px", padding: "2px 10px" }}>
-                  {t}
-                </span>
-              ))}
             </div>
           </div>
         </div>
