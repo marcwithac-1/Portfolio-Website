@@ -143,7 +143,6 @@ export default function ResumePage({ src }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [navigate]);
 
-  // Combined function to check scroll state
   const checkScrollable = () => {
     const panel = panelRef.current;
     if (panel) {
@@ -153,7 +152,6 @@ export default function ResumePage({ src }) {
     }
   };
 
-  // Re-run scroll check on tab switch or when certificate expansion changes
   useEffect(() => {
     const t = setTimeout(checkScrollable, 50);
     window.addEventListener("resize", checkScrollable);
@@ -177,7 +175,6 @@ export default function ResumePage({ src }) {
 
   return (
     <div id="menu-screen" className="p5-bg-container">
-      {/* MP4 Video Background */}
       <video 
         className="p5-video-bg" 
         src={myVideoFile} 
@@ -620,7 +617,6 @@ export default function ResumePage({ src }) {
           ))}
         </div>
 
-        {/* 1. EDUCATION PANEL (Active === 0) */}
         {active === 0 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
@@ -680,7 +676,6 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* 2. EXPERIENCE PANEL (Active === 1) */}
         {active === 1 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
@@ -729,7 +724,6 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* 3. SKILLS PANEL (Active === 2) */}
         {active === 2 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
@@ -755,7 +749,6 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* 4. CERTIFICATIONS PANEL (Active === 3) */}
         {active === 3 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
@@ -781,7 +774,6 @@ export default function ResumePage({ src }) {
                         </button>
                       </div>
 
-                      {/* Expandable Image Container */}
                       {isExpanded && (
                         <div className="cert-image-container">
                           <img 
@@ -801,7 +793,6 @@ export default function ResumePage({ src }) {
           </div>
         )}
 
-        {/* 5. ACHIEVEMENTS PANEL (Active === 4) */}
         {active === 4 && (
           <div className="resume-panel-container">
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>

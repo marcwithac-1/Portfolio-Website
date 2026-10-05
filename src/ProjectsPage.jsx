@@ -54,7 +54,6 @@ export default function ProjectsPage() {
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
 
-  // Stores playback timestamps for each project id: { [projectId]: currentTime }
   const [videoTimes, setVideoTimes] = useState({});
 
   useEffect(() => {
@@ -77,7 +76,6 @@ export default function ProjectsPage() {
 
   const currentProject = PROJECTS[active];
 
-  // Handler to update timestamp for the current project
   const handleTimeUpdate = (time) => {
     setVideoTimes((prev) => ({
       ...prev,
@@ -87,7 +85,6 @@ export default function ProjectsPage() {
 
   return (
     <div className="projects-screen">
-      {/* MP4 Video Background Layer with Overlay Tint */}
       <div className="projects-bg" aria-hidden="true">
         <video
           className="projects-video-bg"
@@ -439,7 +436,6 @@ export default function ProjectsPage() {
         }
       `}</style>
 
-      {/* Left Menu Stack */}
       <div className="projects-stack">
         <div className={`projects-header-title ${mounted ? "mounted" : ""}`}>
           PROJECTS
@@ -463,7 +459,6 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      {/* Right Display Panel with Native Controls & Timestamp Memory */}
       <div className="project-display-panel" key={currentProject.id}>
         <div>
           <div className="panel-top-bar">
@@ -509,7 +504,6 @@ export default function ProjectsPage() {
   );
 }
 
-// Sub-component that manages native video element and applies the saved timestamp on mount
 function NativeVideoPlayer({ videoSrc, savedTime, onTimeUpdate }) {
   const videoRef = useRef(null);
 

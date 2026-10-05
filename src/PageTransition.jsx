@@ -94,7 +94,6 @@ function SocialsTransition() {
 }
 
 function GithubTransition() {
-  // Confined to the right side of the screen with a clean exit path
   const bars = [
     { color: "#2b0005", top: "12vh", height: "30vh", delay: 0 },
     { color: "#c4001a", top: "37vh", height: "30vh", delay: 0.06 },
@@ -116,7 +115,7 @@ function GithubTransition() {
         transformOrigin: "left",
       }}
       initial={{ x: -1000, opacity: 1 }}
-      animate={{ x: [-1000, 0, 0, 1600] }} // Increased the final value to 1600 so they completely exit the screen
+      animate={{ x: [-1000, 0, 0, 1600] }}
       transition={{
         duration: 0.56,
         delay: bar.delay,

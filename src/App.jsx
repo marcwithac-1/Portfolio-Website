@@ -6,8 +6,7 @@ import main2 from './assets/red bg.mp4'
 import main3 from './assets/red bg.mp4'
 import P3Menu from './P3Menu'
 import ProjectsPage from "./ProjectsPage"
-import GraphicDesignPage from "./GraphicDesignPage" // <-- 1. Import your new Graphic Design page
-import VideoPage from './VideoPage'
+import GraphicDesignPage from "./GraphicDesignPage"
 import ResumePage from './ResumePage'
 import PageTransition from './PageTransition'
 import Socials from './Socials'
