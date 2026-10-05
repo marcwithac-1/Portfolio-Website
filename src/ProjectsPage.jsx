@@ -54,8 +54,8 @@ export default function ProjectsPage() {
   const [active, setActive] = useState(0);
   const [mounted, setMounted] = useState(false);
 
-  // Stores playback state { currentTime, isPlaying, isMuted } for each project id
-  const [videoStates, setVideoStates] = useState({});
+  // Stores playback timestamps for each project id: { [projectId]: currentTime }
+  const [videoTimes, setVideoTimes] = useState({});
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -77,18 +77,13 @@ export default function ProjectsPage() {
 
   const currentProject = PROJECTS[active];
 
-  // Helper to update current project's video state
-  const updateCurrentVideoState = (newState) => {
-    setVideoStates((prev) => ({
+  // Handler to update timestamp for the current project
+  const handleTimeUpdate = (time) => {
+    setVideoTimes((prev) => ({
       ...prev,
-      [currentProject.id]: {
-        ...(prev[currentProject.id] || { currentTime: 0, isPlaying: false, isMuted: true }),
-        ...newState,
-      },
+      [currentProject.id]: time,
     }));
   };
-
-  const currentState = videoStates[currentProject.id] || { currentTime: 0, isPlaying: false, isMuted: true };
 
   return (
     <div className="projects-screen">
@@ -343,7 +338,7 @@ export default function ProjectsPage() {
           clip-path: polygon(0 0, 100% 0, calc(100% - 6px) 100%, 0 100%);
         }
 
-        /* Full Width Video Container & Controls Overlay */
+        /* Full Width Video Container */
         .panel-video-container {
           position: relative;
           width: 100%;
@@ -352,6 +347,9 @@ export default function ProjectsPage() {
           border: 2px solid rgba(217, 4, 41, 0.5);
           overflow: hidden;
           margin-bottom: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
 
         .panel-video {
@@ -359,63 +357,6 @@ export default function ProjectsPage() {
           height: 100%;
           object-fit: contain;
           display: block;
-        }
-
-        .video-custom-controls {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-          padding: 16px 12px 10px 12px;
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          opacity: 0.9;
-          transition: opacity 0.2s ease;
-        }
-
-        .video-timeline {
-          width: 100%;
-          accent-color: #d90429;
-          cursor: pointer;
-          height: 4px;
-        }
-
-        .video-controls-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-        }
-
-        .video-btn-group {
-          display: flex;
-          gap: 8px;
-          align-items: center;
-        }
-
-        .video-control-btn {
-          background: #d90429;
-          border: none;
-          color: #fff;
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px;
-          letter-spacing: 1px;
-          padding: 3px 10px;
-          cursor: pointer;
-          clip-path: polygon(0 0, 100% 0, calc(100% - 4px) 100%, 0 100%);
-          transition: background 0.2s ease;
-        }
-
-        .video-control-btn:hover {
-          background: #ff4d6d;
-        }
-
-        .video-time-display {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 14px;
-          color: #ccc;
-          letter-spacing: 1px;
         }
 
         .panel-fallback-video {
@@ -522,7 +463,7 @@ export default function ProjectsPage() {
         ))}
       </div>
 
-      {/* Right Display Panel with Full-Sized Interactive Video */}
+      {/* Right Display Panel with Native Controls & Timestamp Memory */}
       <div className="project-display-panel" key={currentProject.id}>
         <div>
           <div className="panel-top-bar">
@@ -534,12 +475,17 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          {/* Full-Sized Video Container with Persistent State & Fullscreen */}
-          <InteractiveVideoPlayer
-            videoSrc={currentProject.videoSrc}
-            state={currentState}
-            onUpdateState={updateCurrentVideoState}
-          />
+          <div className="panel-video-container">
+            {currentProject.videoSrc ? (
+              <NativeVideoPlayer
+                videoSrc={currentProject.videoSrc}
+                savedTime={videoTimes[currentProject.id] || 0}
+                onTimeUpdate={handleTimeUpdate}
+              />
+            ) : (
+              <div className="panel-fallback-video">NO VIDEO DEMO AVAILABLE</div>
+            )}
+          </div>
 
           <div className="panel-title">{currentProject.title}</div>
           <div className="panel-description">{currentProject.description}</div>
@@ -563,123 +509,29 @@ export default function ProjectsPage() {
   );
 }
 
-// Sub-component handling video playback, memory persistence, scrubbing, mute, and fullscreen
-function InteractiveVideoPlayer({ videoSrc, state, onUpdateState }) {
+// Sub-component that manages native video element and applies the saved timestamp on mount
+function NativeVideoPlayer({ videoSrc, savedTime, onTimeUpdate }) {
   const videoRef = useRef(null);
-  const containerRef = useRef(null);
-  const [duration, setDuration] = useState(0);
 
-  // Sync state changes with the DOM video element whenever it mounts or switches
   useEffect(() => {
-    if (!videoRef.current) return;
-    videoRef.current.currentTime = state.currentTime || 0;
-    videoRef.current.muted = state.isMuted ?? true;
-
-    if (state.isPlaying) {
-      videoRef.current.play().catch(() => {});
-    } else {
-      videoRef.current.pause();
+    if (videoRef.current) {
+      videoRef.current.currentTime = savedTime;
     }
   }, [videoSrc]);
 
-  const handleTogglePlay = () => {
-    if (!videoRef.current) return;
-    if (state.isPlaying) {
-      videoRef.current.pause();
-      onUpdateState({ isPlaying: false });
-    } else {
-      videoRef.current.play().catch(() => {});
-      onUpdateState({ isPlaying: true });
-    }
-  };
-
-  const handleToggleMute = () => {
-    if (!videoRef.current) return;
-    const nextMuted = !state.isMuted;
-    videoRef.current.muted = nextMuted;
-    onUpdateState({ isMuted: nextMuted });
-  };
-
-  const handleTimeUpdate = () => {
-    if (!videoRef.current) return;
-    onUpdateState({ currentTime: videoRef.current.currentTime });
-  };
-
-  const handleLoadedMetadata = () => {
-    if (!videoRef.current) return;
-    setDuration(videoRef.current.duration);
-    // Ensure initial time sync after metadata loads
-    videoRef.current.currentTime = state.currentTime || 0;
-  };
-
-  const handleSeek = (e) => {
-    const newTime = parseFloat(e.target.value);
-    if (!videoRef.current) return;
-    videoRef.current.currentTime = newTime;
-    onUpdateState({ currentTime: newTime });
-  };
-
-  const handleFullscreen = () => {
-    if (!containerRef.current) return;
-    if (containerRef.current.requestFullscreen) {
-      containerRef.current.requestFullscreen();
-    } else if (containerRef.current.webkitRequestFullscreen) {
-      containerRef.current.webkitRequestFullscreen();
-    } else if (containerRef.current.msRequestFullscreen) {
-      containerRef.current.msRequestFullscreen();
-    }
-  };
-
-  const formatTime = (secs) => {
-    if (isNaN(secs)) return "0:00";
-    const mins = Math.floor(secs / 60);
-    const remain = Math.floor(secs % 60);
-    return `${mins}:${remain < 10 ? "0" : ""}${remain}`;
-  };
-
   return (
-    <div className="panel-video-container" ref={containerRef}>
-      {videoSrc ? (
-        <>
-          <video
-            ref={videoRef}
-            className="panel-video"
-            src={videoSrc}
-            playsInline
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onEnded={() => onUpdateState({ isPlaying: false, currentTime: 0 })}
-          />
-          <div className="video-custom-controls">
-            <input
-              type="range"
-              className="video-timeline"
-              min={0}
-              max={duration || 0}
-              value={state.currentTime || 0}
-              onChange={handleSeek}
-            />
-            <div className="video-controls-row">
-              <div className="video-btn-group">
-                <button className="video-control-btn" onClick={handleTogglePlay}>
-                  {state.isPlaying ? "PAUSE" : "PLAY"}
-                </button>
-                <button className="video-control-btn" onClick={handleToggleMute}>
-                  {state.isMuted ? "UNMUTE" : "MUTE"}
-                </button>
-                <button className="video-control-btn" onClick={handleFullscreen}>
-                  FULLSCREEN
-                </button>
-              </div>
-              <div className="video-time-display">
-                {formatTime(state.currentTime || 0)} / {formatTime(duration)}
-              </div>
-            </div>
-          </div>
-        </>
-      ) : (
-        <div className="panel-fallback-video">NO VIDEO DEMO AVAILABLE</div>
-      )}
-    </div>
+    <video
+      ref={videoRef}
+      className="panel-video"
+      src={videoSrc}
+      controls
+      playsInline
+      onTimeUpdate={(e) => onTimeUpdate(e.target.currentTime)}
+      onLoadedMetadata={() => {
+        if (videoRef.current) {
+          videoRef.current.currentTime = savedTime;
+        }
+      }}
+    />
   );
 }

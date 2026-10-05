@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bgVideo from "./assets/city red 2.mp4"; // Adjust path if necessary
+import bgVideo from "./assets/city red 2.mp4";
 import swineScanImg from "./assets/Swine Scan Poster.jpg";
 import southSideImg from "./assets/South Side Ballers League Poster.jpg";
 import ryujinImg from "./assets/Ryujin Tunnel Vision Poster.jpg";
@@ -31,34 +31,196 @@ const GRAPHIC_PROJECTS = [
     title: "SWINE SCAN - CS EXPO POSTER",
     mediaType: "image",
     mediaSrc: swineScanImg,
+    thumbnailWidth: "330px",  
+    thumbnailHeight: "453px", 
   },
   {
     id: "gd-2",
     badge: "02",
-    title: "SOUTH SIDE BALLERS LEAGUE POSTER",
+    title: "AESPA WINTER - LEMONADE POSTER",
     mediaType: "image",
-    mediaSrc: southSideImg,
+    mediaSrc: winterImg,
+    thumbnailHeight: "453px",
+    thumbnailWidth: "330px"
   },
   {
     id: "gd-3",
     badge: "03",
-    title: "RETRO ARCADE PACKAGING",
+    title: "ITZY RYUJIN - TUNNEL VISION POSTER",
     mediaType: "image",
-    mediaSrc: "/images/graphic3.png",
+    mediaSrc: ryujinImg,
+    thumbnailHeight: "453px",
+    thumbnailWidth: "335px"
   },
   {
     id: "gd-4",
     badge: "04",
-    title: "EDITORIAL MAGAZINE SPREAD",
+    title: "XG CHISA POSTER",
     mediaType: "image",
-    mediaSrc: "/images/graphic4.png",
+    mediaSrc: chisaImg,
+    thumbnailHeight: "453px",
+    thumbnailWidth: "335px"
+  },
+  {
+    id: "gd-5",
+    badge: "05",
+    title: "AESPA GISELLE POSTER",
+    mediaType: "image",
+    mediaSrc: giselleImg,
+    thumbnailHeight: "453px",
+    thumbnailWidth: "340px"
+  },
+  {
+    id: "gd-6",
+    badge: "06",
+    title: "LAUFEX - SLOW DOWN POSTER",
+    mediaType: "image",
+    mediaSrc: laufeyImg,
+    thumbnailHeight: "360px",
+    thumbnailWidth: "460px"
+  },  
+  {
+    id: "gd-7",
+    badge: "07",
+    title: "CODEX - DESIGN THINKING COMPETITION POSTER",
+    mediaType: "image",
+    mediaSrc: codexImg,
+    thumbnailHeight: "360px",
+    thumbnailWidth: "625px"
+  },
+  {
+    id: "gd-8",
+    badge: "08",
+    title: "ETA: EXPECT TIMELY ARRIVAL - TECHNOPRENEURSHIP POSTER",
+    mediaType: "image",
+    mediaSrc: chimacImg,
+    thumbnailHeight: "360px",
+    thumbnailWidth: "625px"
+  },
+  {
+    id: "gd-9",
+    badge: "09",
+    title: "HIGH TIDE - VALORANT MONTAGE POSTER",
+    mediaType: "image",
+    mediaSrc: hightideImg,
+    thumbnailHeight: "360px",
+    thumbnailWidth: "625px"
+  },
+  {
+    id: "gd-10",
+    badge: "10",
+    title: "SOUTHRIDGE EGAMES VALORANT POSTER",
+    mediaType: "image",
+    mediaSrc: egamesImg,
+    thumbnailHeight: "360px",
+    thumbnailWidth: "625px"
+  },
+  {
+    id: "gd-11",
+    badge: "11",
+    title: "CS NIGHT EDIT",
+    mediaType: "video",
+    mediaSrc: csnightVid,
+    thumbnailHeight: "320px",
+    thumbnailWidth: "425px"
+    
+  },
+  {
+    id: "gd-12",
+    badge: "12",
+    title: "SWINE SCAN - PSC 9 PITCH DECK",
+    mediaType: "video",
+    mediaSrc: swinescanVid + "#t=3.5",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "425px"
+  },
+  {
+    id: "gd-13",
+    badge: "13",
+    title: "SALAYLIWA - STARTUP MUNTINLUPA PITCH DECK",
+    mediaType: "video",
+    mediaSrc: salayliwaVid + "#t=128",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "425px"
+  },
+  {
+    id: "gd-14",
+    badge: "14",
+    title: "CODEX - DESIGN THINKING VIDEO",
+    mediaType: "video",
+    mediaSrc: codexVid + "#t=10",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-15",
+    badge: "15",
+    title: "[MIXED MEDIA] NEWJEANS - JUST A DREAM EDIT",
+    mediaType: "video",
+    mediaSrc: newjeansVid,
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-16",
+    badge: "16",
+    title: "[MIXED MEDIA] LAUFEY - FRAGILE EDIT",
+    mediaType: "video",
+    mediaSrc: fragileVid,
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-17",
+    badge: "17",
+    title: "SOUTH SIDE BALLERS LEAGUE AWARDS VIDEO",
+    mediaType: "video",
+    mediaSrc: ssbawardsVid + "#t=10",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-18",
+    badge: "18",
+    title: "SOUTH SIDE BALLERS LEAGUE - DAY 1 HYPE VIDEO",
+    mediaType: "video",
+    mediaSrc: day1hypeVid + "#t=10",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-19",
+    badge: "19",
+    title: "SOUTH SIDE BALLERS LEAGUE - DAY 2 HYPE VIDEO",
+    mediaType: "video",
+    mediaSrc: day2hypeVid,
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-20",
+    badge: "20",
+    title: "SOUTH SIDE BALLERS LEAGUE - DAY 1 HIGHLIGHTS VIDEO",
+    mediaType: "video",
+    mediaSrc: day1highlightsVid + "#t=2",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
+  },
+  {
+    id: "gd-21",
+    badge: "21",
+    title: "HIGH TIDE - VALORANT MONTAGE EDIT",
+    mediaType: "video",
+    mediaSrc: hightideVid + "#t=11.7",
+    thumbnailHeight: "320px",
+    thumbnailWidth: "423px"
   },
 ];
 
 export default function GraphicDesignPage() {
   const navigate = useNavigate();
   const [mounted, setMounted] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null); // For Lightbox Modal
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 80);
@@ -69,9 +231,9 @@ export default function GraphicDesignPage() {
     const onKey = (e) => {
       if (e.key === "Escape" || e.key === "Backspace" || e.key === "ArrowLeft") {
         if (selectedItem) {
-          setSelectedItem(null); // Close modal if open
+          setSelectedItem(null);
         } else {
-          navigate(-1); // Return back
+          navigate(-1);
         }
       }
     };
@@ -85,7 +247,6 @@ export default function GraphicDesignPage() {
 
   return (
     <div className="graphic-screen">
-      {/* MP4 Video Background Layer with P5 Overlay Tint */}
       <div className="graphic-bg" aria-hidden="true">
         <video
           className="graphic-video-bg"
@@ -147,7 +308,6 @@ export default function GraphicDesignPage() {
           pointer-events: none;
         }
 
-        /* Header Section */
         .graphic-header-container {
           position: relative;
           z-index: 10;
@@ -181,32 +341,43 @@ export default function GraphicDesignPage() {
           letter-spacing: 1.5px;
         }
 
-        /* Gallery Sections */
         .gallery-section {
           position: relative;
           z-index: 10;
           display: flex;
           flex-direction: column;
           gap: 16px;
+          align-items: flex-start;
+        }
+
+        .p5-section-banner {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          min-height: 60px;
+          padding: 0 24px;
+          background: linear-gradient(90deg, #d90429 0%, #ef233c 100%);
+          clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+          color: #ffffff;
+          box-shadow: 8px 0 0 rgba(0, 0, 0, 0.88);
         }
 
         .section-title {
           font-family: 'Anton', sans-serif;
-          font-size: 32px;
-          color: #ff2a2a;
+          font-size: 45px;
+          color: #ffffff;
           letter-spacing: 1.5px;
-          text-shadow: 0 3px 0 rgba(0,0,0,0.8);
-          border-left: 5px solid #ff2a2a;
-          padding-left: 12px;
+          text-shadow: 0 3px 0 rgba(0,0,0,0.6);
+          margin: 0;
         }
 
         .gallery-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
           gap: 20px;
         }
 
-        /* Tile Card Styling */
         .gallery-tile {
           position: relative;
           background: #111111;
@@ -218,6 +389,8 @@ export default function GraphicDesignPage() {
           transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
           display: flex;
           flex-direction: column;
+          flex-grow: 0;
+          flex-shrink: 0;
         }
 
         .gallery-tile:hover {
@@ -229,8 +402,7 @@ export default function GraphicDesignPage() {
         .tile-media-box {
           position: relative;
           width: 100%;
-          height: 200px;
-          background: #000;
+          background: #ffffff;
           overflow: hidden;
         }
 
@@ -256,6 +428,7 @@ export default function GraphicDesignPage() {
           padding: 1px 10px;
           clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
           box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+          z-index: 2;
         }
 
         .tile-content {
@@ -275,7 +448,6 @@ export default function GraphicDesignPage() {
           letter-spacing: 1px;
         }
 
-        /* Lightbox Modal Overlay */
         .lightbox-overlay {
           position: fixed;
           inset: 0;
@@ -284,7 +456,7 @@ export default function GraphicDesignPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 4vw;
+          padding: 2vw;
           animation: fadeIn 0.2s ease forwards;
         }
 
@@ -297,9 +469,9 @@ export default function GraphicDesignPage() {
           position: relative;
           background: #110204;
           border: 3px solid #ff2a2a;
-          width: 100%;
-          max-width: 900px;
-          max-height: 90vh;
+          width: 95vw;
+          max-width: 1400px;
+          max-height: 95vh;
           overflow-y: auto;
           padding: 24px;
           box-shadow: 12px 12px 0 rgba(255, 42, 42, 0.3);
@@ -310,7 +482,7 @@ export default function GraphicDesignPage() {
 
         .lightbox-media-container {
           width: 100%;
-          max-height: 65vh;
+          max-height: 80vh;
           background: #000;
           display: flex;
           align-items: center;
@@ -321,7 +493,7 @@ export default function GraphicDesignPage() {
 
         .lightbox-media {
           max-width: 100%;
-          max-height: 65vh;
+          max-height: 80vh;
           object-fit: contain;
         }
 
@@ -357,7 +529,6 @@ export default function GraphicDesignPage() {
         }
       `}</style>
 
-      {/* Header */}
       <div className="graphic-header-container">
         <div className={`graphic-header-title ${mounted ? "mounted" : ""}`}>
           GRAPHIC DESIGN & MEDIA
@@ -365,17 +536,22 @@ export default function GraphicDesignPage() {
         <div className="graphic-back-hint"></div>
       </div>
 
-      {/* SECTION 1: IMAGES */}
       <div className="gallery-section">
-        <div className="section-title">IMAGES & BRANDING</div>
+        <div className="p5-section-banner">
+          <div className="section-title">IMAGES & POSTERS</div>
+        </div>
         <div className="gallery-grid">
           {imageProjects.map((proj) => (
             <div
               key={proj.id}
               className="gallery-tile"
               onClick={() => setSelectedItem(proj)}
+              style={{ width: proj.thumbnailWidth || "280px" }}
             >
-              <div className="tile-media-box">
+              <div 
+                className="tile-media-box"
+                style={{ height: proj.thumbnailHeight || "260px" }}
+              >
                 <div className="tile-badge">{proj.badge}</div>
                 {proj.mediaSrc ? (
                   <img src={proj.mediaSrc} alt={proj.title} className="tile-media" />
@@ -391,17 +567,22 @@ export default function GraphicDesignPage() {
         </div>
       </div>
 
-      {/* SECTION 2: VIDEOS */}
       <div className="gallery-section">
-        <div className="section-title">VIDEOS & MOTION GRAPHICS</div>
+        <div className="p5-section-banner">
+          <div className="section-title">VIDEO EDITS</div>
+        </div>
         <div className="gallery-grid">
           {videoProjects.map((proj) => (
             <div
               key={proj.id}
               className="gallery-tile"
               onClick={() => setSelectedItem(proj)}
+              style={{ width: proj.thumbnailWidth || "280px" }}
             >
-              <div className="tile-media-box">
+              <div 
+                className="tile-media-box"
+                style={{ height: proj.thumbnailHeight || "260px" }}
+              >
                 <div className="tile-badge">{proj.badge}</div>
                 {proj.mediaSrc ? (
                   <video src={proj.mediaSrc} className="tile-media" muted playsInline />
@@ -417,7 +598,6 @@ export default function GraphicDesignPage() {
         </div>
       </div>
 
-      {/* LIGHTBOX MODAL FOR DETAILED VIEW */}
       {selectedItem && (
         <div className="lightbox-overlay" onClick={() => setSelectedItem(null)}>
           <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>

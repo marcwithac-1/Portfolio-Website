@@ -530,11 +530,11 @@ export default function Socials() {
         </div>
       ))}
 
-      <div className={`sc-footer${mounted ? " mounted" : ""}`}>
+      {/*<div className={`sc-footer${mounted ? " mounted" : ""}`}>
         <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SELECT</span></div>
         <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>OPEN</span></div>
         <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>BACK</span></div>
-      </div>
+      </div>*/}
     </div>
   );
 }

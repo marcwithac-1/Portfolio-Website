@@ -642,11 +642,11 @@ export default function AboutMe() {
         ))}
       </div>
 
-      <div className={`sc-footer${mounted ? " mounted" : ""}`}>
+      {/*<div className={`sc-footer${mounted ? " mounted" : ""}`}>
         <div className="sc-footer-row"><span className="sc-footer-key">↑↓</span><span>SELECT</span></div>
         <div className="sc-footer-row"><span className="sc-footer-key">↵</span><span>REVEAL</span></div>
         <div className="sc-footer-row"><span className="sc-footer-key">ESC</span><span>BACK</span></div>
-      </div>
+      </div>*/}
     </div>
   );
 }
