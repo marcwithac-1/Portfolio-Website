@@ -427,8 +427,8 @@ export default function AboutMe() {
           position: absolute;
           top: 0; bottom: 0;
           left: 73%;
-          width: 6%;
-          background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
+          width: 0%;
+          background: linear-gradient(90deg, rgb(255, 246, 246) 0%, rgb(252, 252, 252) 100%);
           z-index: 1;
           pointer-events: none;
           opacity: 0;

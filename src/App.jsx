@@ -38,15 +38,14 @@ function AnimatedRoutes() {
         <Route path="/resume" element={
           <PageTransition><ResumePage src={main2} /></PageTransition>
         } />
-        <Route path="/github" element={
-          <PageTransition variant="github"><ProjectsPage /></PageTransition>
+        <Route path="/projects" element={
+          <PageTransition variant="projects"><ProjectsPage /></PageTransition>
         } />
-        {/* 2. Add the route for Graphic Design matching the 'sideproj' page key */}
-        <Route path="/sideproj" element={
-          <PageTransition variant="sideproj"><GraphicDesignPage /></PageTransition>
+        <Route path="/graphic-design" element={
+          <PageTransition variant="graphic-design"><GraphicDesignPage /></PageTransition>
         } />
-        <Route path="/socials" element={
-          <PageTransition variant="socials"><Socials /></PageTransition>
+        <Route path="/contacts" element={
+          <PageTransition variant="contacts"><Socials /></PageTransition>
         } />
       </Routes>
     </AnimatePresence>

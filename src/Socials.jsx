@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import char1 from "./assets/Mail.png";
 import char2 from "./assets/instagram icon.png";
-import char3 from "./assets/Tumblr.png";
+import char3 from "./assets/linkedin3.png";
 import bgVideo from "./assets/city red 2.mp4";
 import newsign from "./assets/newsign.png";
 import icon1 from "./assets/Random.png";
@@ -29,8 +29,8 @@ const ITEMS = [
     stats: [],
   },
   {
-    id: "tiktok", label: "TIKTOK", handle: "@workofmarc", href: "https://tiktok.com/@workofmarc", icon: "🎨", barIcon: icon3, bars: 1, newBars: [0],
-    links: ["Work of Marc"],
+    id: "tiktok", label: "LINKEDIN", handle: "mljsumague", href: "https://www.linkedin.com/in/mljsumague/", icon: "💼", barIcon: icon3, bars: 1, newBars: [0],
+    links: ["Marc Lester Sumague"],
     stats: [],
   },
 ];
@@ -39,7 +39,7 @@ export default function Socials() {
   const [active, setActive]               = useState(0);
   const [mounted, setMounted]             = useState(false);
   const [activeInfoBar, setActiveInfoBar] = useState(0);
-  const [focus, setFocus]                 = useState("left"); // "left" | "right"
+  const [focus, setFocus]                 = useState("left");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -149,8 +149,8 @@ export default function Socials() {
           position: absolute;
           top: 0; bottom: 0;
           left: 73%;
-          width: 6%;
-          background: linear-gradient(90deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
+          width: 0%;
+          background: linear-gradient(90deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 100%);
           z-index: 1;
           pointer-events: none;
           opacity: 0;
