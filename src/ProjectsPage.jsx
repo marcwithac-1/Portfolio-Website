@@ -100,6 +100,26 @@ export default function ProjectsPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
 
+        /* Add inside the <style> block in ProjectsPage.jsx */
+        @media (max-width: 1024px) {
+          .projects-screen {
+            flex-direction: column !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+            padding: 30px 16px !important;
+            gap: 20px;
+          }
+          .projects-stack, 
+          .project-display-panel {
+            width: 100% !important;
+            max-height: none !important;
+          }
+          .projects-header-title {
+            font-size: 48px !important;
+          }
+        }
+
         .projects-screen {
           position: relative;
           width: 100vw;

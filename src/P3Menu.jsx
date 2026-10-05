@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 
 const ITEMS = [
-  { id: "about",    label: "ABOUT ME",         page: "about",    fontSize: 72, offsetX: -40,  y: -235,   skew: 0,  skewY: -14, },
-  { id: "resume",   label: "RESUME",           page: "resume",   fontSize: 75, offsetX: 55,  y: -120,  skew: 0,  skewY: -7   },
-  { id: "projects",   label: "PROJECTS",  page: "projects",   fontSize: 80, offsetX: -68,  y: -15,  skew: 0,  skewY: 0,   },
-  { id: "graphic-design", label: "GRAPHIC DESIGN", page: "graphic-design", fontSize: 48, offsetX: -80, y: 120,  skew: 0,  skewY: 11,   },
-  { id: "contacts",  label: "CONTACTS",          page: "contacts",  fontSize: 62, offsetX: 43, y: 235, skew: 0,  skewY: 19,   },
+  { id: "about",           label: "ABOUT ME",        page: "about",          fontSize: 72, offsetX: -40,  y: -235,   skew: 0,  skewY: -14, },
+  { id: "resume",          label: "RESUME",            page: "resume",     fontSize: 75, offsetX: 55,   y: -120,   skew: 0,  skewY: -7   },
+  { id: "projects",        label: "PROJECTS",  page: "projects",     fontSize: 80, offsetX: -68,  y: -15,   skew: 0,  skewY: 0,   },
+  { id: "graphic-design", label: "GRAPHIC DESIGN", page: "graphic-design", fontSize: 48, offsetX: -80, y: 120,   skew: 0,  skewY: 11,   },
+  { id: "contacts",       label: "CONTACTS",          page: "contacts",   fontSize: 62, offsetX: 43, y: 235, skew: 0,  skewY: 19,   },
 ];
 
 const CLIP_SHAPES = [
@@ -44,6 +44,7 @@ export default function P3Menu({ onNavigate }) {
   return (
     <>
       <style>{`
+        /* --- Fully Responsive Scaling via CSS Custom Properties / Media Queries --- */
         .p3-overlay {
           position: absolute;
           inset: 0;
@@ -52,7 +53,7 @@ export default function P3Menu({ onNavigate }) {
           align-items: center;
           justify-content: center;
           pointer-events: none;
-          overflow: hidden; /* Prevents unwanted scrollbars on small screens */
+          overflow: hidden;
         }
         
         @font-face {
@@ -62,23 +63,37 @@ export default function P3Menu({ onNavigate }) {
           font-style: normal;
         }
 
-        /* 
-          🔒 RESPONSIVE MENU ANCHOR:
-          Instead of margin-left: 1500px (which breaks on smaller screens), 
-          we use absolute positioning anchored to the right side of the screen.
-        */
         .p3-menu {
           position: absolute;
-          right: 5vw;            /* Stays a fixed percentage away from the right edge */
-          top: 50%;              /* Centers vertically */
+          right: 5vw;
+          top: 50%;
           transform: translateY(-50%) rotate(-3deg);
           transform-origin: right center;
           z-index: 20;
           padding: 20px;
           display: flex;
           flex-direction: column;
-          align-items: flex-end; /* Aligns text neatly to the right */
+          align-items: flex-end;
           pointer-events: all;
+          
+          /* Scale down smoothly for 1280x800 and smaller screens */
+          font-size: 1vw; 
+        }
+
+        @media (min-width: 1500px) {
+          .p3-menu { transform: translateY(-50%) rotate(-3deg) scale(1); }
+        }
+        @media (max-width: 1440px) {
+          .p3-menu { transform: translateY(-50%) rotate(-3deg) scale(0.85); }
+        }
+        @media (max-width: 1280px) {
+          .p3-menu { transform: translateY(-50%) rotate(-3deg) scale(0.72); right: 3vw; }
+        }
+        @media (max-width: 1024px) {
+          .p3-menu { transform: translateY(-50%) rotate(-3deg) scale(0.6); right: 2vw; }
+        }
+        @media (max-width: 640px) {
+          .p3-menu { transform: translateY(-50%) rotate(-3deg) scale(0.45); right: 1vw; }
         }
 
         .p3-row {
@@ -181,28 +196,6 @@ export default function P3Menu({ onNavigate }) {
           transition: opacity 0.12s ease;
         }
         .p3-row.active .p3-label-bright { opacity: 1; }
-
-        .p3-hint {
-          position: absolute;
-          bottom: 24px; right: 28px;
-          z-index: 20;
-          display: flex; flex-direction: column;
-          align-items: flex-end; gap: 5px;
-          font-family: 'Anton', sans-serif;
-          opacity: 0;
-          transition: opacity 0.5s ease 0.9s;
-        }
-        .p3-hint.mounted { opacity: 1; }
-        .p3-hint-row {
-          display: flex; align-items: center; gap: 8px;
-          font-size: 13px; letter-spacing: 2px;
-          color: rgba(255,255,255,0.28);
-        }
-        .p3-hint-key {
-          border: 1px solid rgba(255,255,255,0.2);
-          border-radius: 3px;
-          padding: 1px 6px; font-size: 11px;
-        }
       `}</style>
 
       <div className="p3-overlay">
@@ -271,12 +264,6 @@ export default function P3Menu({ onNavigate }) {
             );
           })}
         </nav>
-
-        {/* Hint */}
-        {/*<div className={`p3-hint ${mounted ? "mounted" : ""}`}>
-          <div className="p3-hint-row"><span className="p3-hint-key">↑↓</span><span>NAVIGATE</span></div>
-          <div className="p3-hint-row"><span className="p3-hint-key">↵</span><span>CONFIRM</span></div>
-        </div>*/}
       </div>
     </>
   );

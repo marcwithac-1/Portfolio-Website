@@ -188,6 +188,36 @@ export default function ResumePage({ src }) {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap');
 
+        /* Add inside the <style> block in ResumePage.jsx */
+        @media (max-width: 1024px) {
+          .p5-bg-container {
+            overflow-y: auto !important;
+            height: auto !important;
+            min-height: 100vh;
+          }
+          .resume-overlay {
+            position: relative !important;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 16px;
+            gap: 20px;
+          }
+          .resume-stack {
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            width: 100% !important;
+            transform: none !important;
+          }
+          .resume-panel-container {
+            position: relative !important;
+            top: auto !important;
+            right: auto !important;
+            width: 100% !important;
+            max-height: none !important;
+          }
+        }
+        
         /* Persona 5 Theme Background */
         .p5-bg-container {
           position: relative;
@@ -729,7 +759,7 @@ export default function ResumePage({ src }) {
             <div className="resume-detail-panel" ref={panelRef} onScroll={handleScroll}>
               <div className="resume-detail-top">
                 <div className="resume-detail-top-index">03</div>
-                <div className="resume-detail-top-title">SKILLS MATRIX</div>
+                <div className="resume-detail-top-title">SKILLS</div>
                 <div className="resume-detail-top-progress">8/8</div>
               </div>
 

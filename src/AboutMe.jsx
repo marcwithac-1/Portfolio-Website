@@ -134,6 +134,27 @@ export default function AboutMe() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,700;1,700&family=Montserrat:wght@300&display=swap');
 
+        /* Add inside the <style> blocks of AboutMe.jsx and Socials.jsx */
+        @media (max-width: 1024px) {
+          .sc-bar {
+            width: 85vw !important;
+          }
+          .sc-bar-red {
+            width: 85vw !important;
+          }
+          .sc-char {
+            display: none; 
+          }
+          .sc-reveal-panel {
+            width: 95vw !important;
+            left: 2vw !important;
+            height: auto !important;
+            padding: 20px 10px;
+          }
+          .sc-main-portrait-shell {
+            display: none; 
+          }
+        }
         .sc-root {
           position: absolute;
           inset: 0;
